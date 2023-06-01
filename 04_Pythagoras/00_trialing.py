@@ -18,15 +18,11 @@ def difficult(question):
         elif question == "xxx":
             break
 
-        print("Please choose a valid difficulty")
+        print("Please enter a valid response (yes / no / why)")
         print()
 
 
 diff_list = ["easy", "moderate", "hard", "xxx"]
 
-# loop for testing purposes...
-while True:
-    ask_diff = difficult("What difficulty would you like? ")
+ask_diff = difficult("What difficulty would you like? ")
 
-    print(ask_diff)
-    print()
