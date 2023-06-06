@@ -6,19 +6,8 @@ def difficult(question):
             if response == item[0] or response == item:
                 return item
 
-        if question == "easy":
-            print("Easy Mode")
 
-        elif question == "moderate":
-            print("Moderate Mode")
-
-        elif question == "hard":
-            print("Hard Mode")
-
-        elif question == "xxx":
-            break
-
-        print("Please choose a valid difficulty")
+        print("!!! Please choose a valid difficulty !!!")
         print()
 
 
