@@ -28,10 +28,16 @@ def yes_no_why(question):
 
 yesno_list = ["yes", "no", "why"]
 
-display_instructions = yes_no_why("Do you want to see Instructions? ")
+# Loop for testing purposes...
+while True:
+    display_instructions = yes_no_why("Do you want to see Instructions? ")
 
-if display_instructions == "yes":
-    instructions()
+    if display_instructions == "yes":
+        instructions()
 
-elif display_instructions == "why":
-    print("Because I said so!!!")
+    elif display_instructions == "why":
+        print("Because I said so!!!")
+
+    # Used for test cases checker
+    elif display_instructions == "no":
+        print("Program Continues")

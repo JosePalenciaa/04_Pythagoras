@@ -6,7 +6,6 @@ def difficult(question):
             if response == item[0] or response == item:
                 return item
 
-
         print("!!! Please choose a valid difficulty !!!")
         print()
 
