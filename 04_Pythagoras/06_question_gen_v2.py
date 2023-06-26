@@ -29,12 +29,17 @@ o_side = random. randint(1, 10)
 h_side = math.sqrt(a_side ** 2 + o_side ** 2)
 answer = round(h_side)
 
+# substitute for difficulty checker...
+difficulty = "easy"
+
 while True:
 
-    guess = int_checker(f"What is the hypotenuse if the adjacent is {a_side} and the opposite is {o_side}? ")
+    guess = int_checker(f"What is the hypotenuse of if the adjacent is {a_side} and the opposite is {o_side}? ")
 
-    if guess == answer:
-        print("Congratulations! You got the answer.")
+    if difficulty == "easy":
 
-    else:
-        print("Wrong answer")
+        if guess == answer:
+            print("Congratulations! You got the answer.")
+
+        else:
+            print("Wrong answer")

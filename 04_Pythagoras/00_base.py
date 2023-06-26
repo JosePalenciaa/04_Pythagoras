@@ -105,6 +105,22 @@ print("\n===================")
 print("!!! Let's Begin !!!")
 print("===================\n")
 
+# Difficulty selection / asks user what diff...
+ask_diff = difficult("What difficulty would you like? ")
+
+if ask_diff == "easy":
+    mode = "easy"
+
+elif ask_diff == "moderate":
+    mode = "moderate"
+
+elif ask_diff == "hard":
+    mode = "hard"
+
+# Outputs the selected difficulty
+print(f"You've selected the {ask_diff} difficulty")
+print()
+
 # Variables that are placeholders of round mechanics
 rounds_played = 0
 rounds_won = 0
@@ -130,5 +146,9 @@ while rounds != "xxx":
     choose = input(f"Enter a number or 'xxx' to end: ")
     rounds_played += 1
 
+    # Question generator goes here...
+
     if rounds_played == rounds:
         break
+
+        # Looping mechanic for the actual quiz

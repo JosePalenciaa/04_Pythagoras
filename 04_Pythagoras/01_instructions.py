@@ -9,7 +9,7 @@ def instructions():
           "\n\n• First select a difficulty."
           "\n• You are given 3 attempts. "
           "\n• Solve the missing side. "
-          "\n• Round your answer to whole integers."
+          "\n• Round your answer to a whole number / integer."
           "\n• Can you win?")
     print()
 
