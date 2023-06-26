@@ -37,4 +37,4 @@ while True:
         print("Congratulations! You got the answer.")
 
     else:
-        print("GGEZ")
+        print("Wrong answer")

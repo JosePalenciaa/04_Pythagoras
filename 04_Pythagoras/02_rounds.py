@@ -30,7 +30,6 @@ rounds_lost = 0
 
 rounds = int_checker("How many rounds (<ENTER> for infinite): ")
 
-
 # rounds loop
 end_game = "no"
 while rounds != "xxx":
