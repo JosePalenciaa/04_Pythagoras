@@ -1,27 +1,36 @@
-def int_checker(question):
+def int_check(question, low=None, high=100, exit_code=None):
+
+    if low is None and high is None:
+        error = "Please enter a valid integer"
+        situation = "any integer"
+    elif low is not None and high is not None:
+        error = f"Please enter an integer between {low} and {high}"
+        situation = "both"
+    else:
+        error = f"Please enter an integer more than {low}"
+        situation = "low only"
 
     while True:
-        response = input(question)
+        response = input(question).lower()
+        if response == exit_code:
+            return response
 
-        error = "Please enter an Integer greater than 0"
+        try:
+            response = int(response)
 
-        if response != "":
-            try:
-                response = int(response)
+            # check that integer is valid (i.e., not too low / too high, etc.)
+            if situation == "any integer":
+                return response
 
-                if response < 1:
-                    print(error)
-                    continue
+            elif situation == "both" and low <= response <= high:
+                return response
 
-            except ValueError:
-                print(error)
-                continue
+            elif situation == "low only" and response >= low:
+                return response
 
-        return response
+            print(error)
 
-# question for testing purposes...
-
-
-ask_question = int_checker("How Many Fish Are There In The Ocean? ")
-
-print(ask_question)
+        except ValueError:
+            print()
+            print(error)
+            continue

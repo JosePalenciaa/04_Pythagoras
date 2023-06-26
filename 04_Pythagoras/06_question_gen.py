@@ -1,3 +1,7 @@
+import math
+import random
+
+
 def int_checker(question):
 
     while True:
@@ -19,9 +23,18 @@ def int_checker(question):
 
         return response
 
-# question for testing purposes...
 
+a_side = random.randint(1, 10)
+o_side = random. randint(1, 10)
+h_side = math.sqrt(a_side ** 2 + o_side ** 2)
+answer = round(h_side)
 
-ask_question = int_checker("How Many Fish Are There In The Ocean? ")
+while True:
 
-print(ask_question)
+    guess = int_checker(f"What is the hypotenuse of if the adjacent is {a_side} and the opposite is {o_side}?")
+
+    if guess == answer:
+        print("Congratulations! You got the answer.")
+
+    else:
+        print("GGEZ")
