@@ -89,17 +89,28 @@ print("!!! Welcome to the Pythagoras Quiz !!!")
 print("######################################")
 print()
 
-# Asks user for a response (related to the instructions)
-display_instructions = yes_no_why("Do you want to see Instructions? ")
+# Looping to so user response of 'why' outputs statement, and reruns the question
+while True:
+    # Asks user for a response (related to the instructions)
+    display_instructions = yes_no_why("Do you want to see Instructions? ")
 
-# Displays instructions of user says 'yes'
-if display_instructions == "yes":
-    print()
-    instructions()
+    # Gets angry at user if they respond with 'why', loop continues
+    if display_instructions == "why":
+        print("Because I said so!!!")
+        print()
+        continue
 
-# Gets angry at user if they respond with 'why'
-elif display_instructions == "why":
-    print("Because I said so!!!")
+    # Displays instructions of user says 'yes', loop breaks and continues with rest of code
+    elif display_instructions == "yes":
+        print()
+        instructions()
+        break
+
+    # Outputs a statement if user says 'no', loop breaks and continues with rest of code
+    elif display_instructions == "no":
+        print("Alright then. If you say so...")
+        break
+
 
 print("\n===================")
 print("!!! Let's Begin !!!")
@@ -109,13 +120,13 @@ print("===================\n")
 ask_diff = difficult("What difficulty would you like? ")
 
 if ask_diff == "easy":
-    mode = "easy"
+    difficulty = "easy"
 
 elif ask_diff == "moderate":
-    mode = "moderate"
+    difficulty = "moderate"
 
 elif ask_diff == "hard":
-    mode = "hard"
+    difficulty = "hard"
 
 # Outputs the selected difficulty
 print(f"You've selected the {ask_diff} difficulty")
@@ -148,6 +159,7 @@ while rounds != "xxx":
 
     # Question generator goes here...
 
+    # ends game when user plays all rounds
     if rounds_played == rounds:
         break
 
