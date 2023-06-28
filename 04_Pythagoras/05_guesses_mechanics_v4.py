@@ -1,4 +1,4 @@
-# checks to see if user input is an integer
+# checks to see if user input is an integer, if <ENTER> gives output
 def guess_int_checker(question):
     while True:
         response = input(question)

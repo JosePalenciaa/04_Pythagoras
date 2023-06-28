@@ -1,52 +1,67 @@
-# checks to see if user input is an integer
-def guess_int_checker(question):
+import math
+import random
+
+
+def int_checker(question):
     while True:
         response = input(question)
-
-        if response == "":
-            print("<ENTER> IS NOT AN ACCEPTED ANSWER\n")
-            continue
-
-        error = "Please enter a valid integer\n"
-
-        try:
-            response = int(response)
-
-            if response < 1:
+        error = "Please enter a valid integer"
+        if response != "":
+            try:
+                response = int(response)
+                if response < 1:
+                    print(error)
+                    continue
+            except ValueError:
                 print(error)
                 continue
-
-        except ValueError:
-            print(error)
-            continue
-
         return response
 
 
-# Guess(es) value and already guessed list...
-guesses_given = 3
-already_guessed = []
+# Set the difficulty to replace difficulty component (testing purposes)
+difficulty = "hard"
 
-# Answer set for testing purposes...
-answer = 3
+if difficulty == "easy":
+    a_side = random.randint(1, 10)
+    o_side = random.randint(1, 10)
+    answer_h = math.sqrt(round(a_side ** 2 + o_side ** 2))
+    quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? Answer: {answer_h} "
 
-# Guesses mechanics...
-while guesses_given > 0:
-    user_guess = guess_int_checker("Enter your guess: ")
+elif difficulty == "medium":
+    a_side = random.randint(10, 20)
+    o_side = random.randint(10, 20)
+    answer_h = math.sqrt(round(a_side ** 2 + o_side ** 2))
+    quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? Answer: {answer_h} "
 
-    if user_guess in already_guessed:
-        print("You've already guessed that number...\n")
-        continue
+elif difficulty == "hard":
+    sides = ["adjacent", "opposite", "hypotenuse"]
 
-    if user_guess == answer:
-        print(f"Congratulations! You guessed the number on the {guesses_given} guess.\n")
-        break
+    # had to ask chat gpt how to loop...
+    for _ in range(3):
+        random_side = random.choice(sides)
+        a_side = random.randint(10, 20)
+        o_side = random.randint(10, 20)
+        answer_h = math.sqrt(round(a_side ** 2 + o_side ** 2))
 
-    else:
-        guesses_given -= 1
-        print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
+        # Answer given for testing purposes
+        if random_side == "adjacent":
+            quest_ask = f"If the hypotenuse is {answer_h} and the opposite is {o_side}, what iss the adjacent? " \
+                        f"Answer: {a_side} "
+            answer = a_side
 
-    already_guessed.append(user_guess)
+        elif random_side == "opposite":
+            quest_ask = f"If the hypotenuse is {answer_h} and the adjacent is {a_side}, what is the opposite? " \
+                        f"Answer: {o_side} "
+            answer = o_side
 
-if guesses_given == 0:
-    print("You've run out of guesses. Game Over.")
+        else:
+            quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
+                        f"Answer: {answer_h} "
+            answer = answer_h
+
+        guess = int_checker(quest_ask)
+        if guess == answer:
+            print("Congratulations! You got the answer.")
+        else:
+            print(f"Wrong answer. The correct answer is {answer}.")
+        print()
