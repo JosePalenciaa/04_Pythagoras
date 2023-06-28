@@ -89,48 +89,21 @@ print("!!! Welcome to the Pythagoras Quiz !!!")
 print("######################################")
 print()
 
-# Looping to so user response of 'why' outputs statement, and reruns the question
-while True:
-    # Asks user for a response (related to the instructions)
-    display_instructions = yes_no_why("Do you want to see Instructions? ")
+# Asks user for a response (related to the instructions)
+display_instructions = yes_no_why("Do you want to see Instructions? ")
 
-    # Gets angry at user if they respond with 'why', loop continues
-    if display_instructions == "why":
-        print("Because I said so!!!")
-        print()
-        continue
+# Displays instructions of user says 'yes'
+if display_instructions == "yes":
+    print()
+    instructions()
 
-    # Displays instructions of user says 'yes', loop breaks and continues with rest of code
-    elif display_instructions == "yes":
-        print()
-        instructions()
-        break
-
-    # Outputs a statement if user says 'no', loop breaks and continues with rest of code
-    elif display_instructions == "no":
-        print("Alright then. If you say so...")
-        break
-
+# Gets angry at user if they respond with 'why'
+elif display_instructions == "why":
+    print("Because I said so!!!")
 
 print("\n===================")
 print("!!! Let's Begin !!!")
 print("===================\n")
-
-# Difficulty selection / asks user what diff...
-ask_diff = difficult("What difficulty would you like? ")
-
-if ask_diff == "easy":
-    difficulty = "easy"
-
-elif ask_diff == "moderate":
-    difficulty = "moderate"
-
-elif ask_diff == "hard":
-    difficulty = "hard"
-
-# Outputs the selected difficulty
-print(f"You've selected the {ask_diff} difficulty")
-print()
 
 # Variables that are placeholders of round mechanics
 rounds_played = 0
@@ -157,10 +130,5 @@ while rounds != "xxx":
     choose = input(f"Enter a number or 'xxx' to end: ")
     rounds_played += 1
 
-    # Question generator goes here...
-
-    # ends game when user plays all rounds
     if rounds_played == rounds:
         break
-
-        # Looping mechanic for the actual quiz

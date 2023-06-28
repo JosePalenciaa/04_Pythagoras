@@ -7,7 +7,7 @@ def int_checker(question):
     while True:
         response = input(question)
 
-        error = "Please enter a valid integer"
+        error = "Please enter an Integer greater than 0"
 
         if response != "":
             try:
@@ -31,7 +31,7 @@ answer = round(h_side)
 
 while True:
 
-    guess = int_checker(f"What is the hypotenuse if the adjacent is {a_side} and the opposite is {o_side}? ")
+    guess = int_checker(f"What is the hypotenuse of if the adjacent is {a_side} and the opposite is {o_side}?")
 
     if guess == answer:
         print("Congratulations! You got the answer.")

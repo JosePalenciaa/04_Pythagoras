@@ -14,6 +14,8 @@ diff_list = ["easy", "moderate", "hard", "xxx"]
 
 ask_diff = difficult("What difficulty would you like? ")
 
+mode = ""
+
 if ask_diff == "easy":
     mode = "easy"
 
@@ -23,4 +25,4 @@ elif ask_diff == "moderate":
 elif ask_diff == "hard":
     mode = "hard"
 
-print(f"You've selected the {ask_diff} difficulty")
+print(ask_diff)
