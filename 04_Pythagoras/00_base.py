@@ -104,7 +104,9 @@ def guess_int_checker(question):
 yesno_list = ["yes", "no", "why"]
 
 # list for accepted values of difficulty
-diff_list = ["easy", "moderate", "hard", "xxx"]
+diff_list = ["easy", "medium", "hard", "xxx"]
+
+difficulty = ""
 
 # Main Routine goes here...
 
@@ -117,7 +119,7 @@ print()
 # Looping to so user response of 'why' outputs statement, and reruns the question
 while True:
     # Asks user for a response (related to the instructions)
-    display_instructions = yes_no_why("Do you want to see Instructions? ")
+    display_instructions = yes_no_why("Do you want to see the INSTRUCTIONS? ")
 
     # Gets angry at user if they respond with 'why', loop continues
     if display_instructions == "why":
@@ -147,8 +149,8 @@ ask_diff = difficult("What difficulty would you like? ")
 if ask_diff == "easy":
     difficulty = "easy"
 
-elif ask_diff == "moderate":
-    difficulty = "moderate"
+elif ask_diff == "medium":
+    difficulty = "medium"
 
 elif ask_diff == "hard":
     difficulty = "hard"
@@ -179,10 +181,76 @@ while rounds != "xxx":
         heading = f"Round {rounds_played + 1} of {rounds}"
 
     print(heading)
-    choose = input(f"Enter a number or 'xxx' to end: ")
     rounds_played += 1
 
     # Question generator goes here...
+    if difficulty == "easy":
+        a_side = random.randint(1, 10)
+        o_side = random.randint(1, 10)
+        answer_h = math.sqrt(round(a_side ** 2 + o_side ** 2))
+        quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
+                    f"Answer: {round(answer_h)} "
+
+        answer = round(answer_h)
+        guess = int_checker(quest_ask)
+
+        if guess == answer:
+            print("Congratulations! You got the answer.")
+        else:
+            print(f"Wrong answer. The correct answer is {answer}.")
+        print()
+
+    # medium difficulty - find hypotenuse, side length range from 10-20
+    elif difficulty == "medium":
+        a_side = random.randint(10, 20)
+        o_side = random.randint(10, 20)
+        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
+        quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
+                    f"Answer: {round(answer_h)} "
+
+        guess = int_checker(quest_ask)
+        answer = round(answer_h)
+
+        # compares user guess to the answer (rounded to integers to make things easier)
+        if guess == answer:
+            print("Congratulations! You got the answer.")
+        else:
+            print(f"Wrong answer. The correct answer is {answer}.")
+        print()
+
+    elif difficulty == "hard":
+        sides = ["adjacent", "opposite", "hypotenuse"]
+
+        # Randomly selects a side to make 'missing'
+        random_side = random.choice(sides)
+        a_side = random.randint(10, 20)
+        o_side = random.randint(10, 20)
+        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
+
+        # adjacent, opposite, hypotenuse - missing side generator...
+        if random_side == "adjacent":
+            quest_ask = f"If the hypotenuse is {round(answer_h, 2)} and the opposite is {o_side}, " \
+                        f"what is the adjacent? Answer: {round(a_side)} "
+
+            answer = round(a_side)
+
+        elif random_side == "opposite":
+            quest_ask = f"If the hypotenuse is {round(answer_h, 2)} and the adjacent is {a_side}, " \
+                        f"what is the opposite? Answer: {round(o_side)} "
+
+            answer = round(o_side)
+
+        else:
+            quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
+                        f"Answer: {round(answer_h)} "
+            answer = round(answer_h)
+
+        guess = int_checker(quest_ask)
+        if guess == answer:
+            print("Congratulations! You got the answer.")
+        else:
+            print(f"Wrong answer. The correct answer is {answer}.")
+        print()
 
     # ends game when user plays all rounds
     if rounds_played == rounds:
