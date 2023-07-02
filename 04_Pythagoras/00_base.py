@@ -189,9 +189,9 @@ while rounds != "xxx":
         o_side = random.randint(1, 10)
         answer_h = math.sqrt(round(a_side ** 2 + o_side ** 2))
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
-                    f"Answer: {round(answer_h)} "
+                    f"Answer: {round(answer_h, 1)} "
 
-        answer = round(answer_h)
+        answer = round(answer_h, 1)
         guess = int_checker(quest_ask)
 
         if guess == answer:
@@ -206,10 +206,10 @@ while rounds != "xxx":
         o_side = random.randint(10, 20)
         answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
-                    f"Answer: {round(answer_h)} "
+                    f"Answer: {round(answer_h, 1)} "
 
         guess = int_checker(quest_ask)
-        answer = round(answer_h)
+        answer = round(answer_h, 1)
 
         # compares user guess to the answer (rounded to integers to make things easier)
         if guess == answer:
@@ -229,21 +229,21 @@ while rounds != "xxx":
 
         # adjacent, opposite, hypotenuse - missing side generator...
         if random_side == "adjacent":
-            quest_ask = f"If the hypotenuse is {round(answer_h, 2)} and the opposite is {o_side}, " \
+            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the opposite is {o_side}, " \
                         f"what is the adjacent? Answer: {round(a_side)} "
 
-            answer = round(a_side)
+            answer = round(a_side, 1)
 
         elif random_side == "opposite":
-            quest_ask = f"If the hypotenuse is {round(answer_h, 2)} and the adjacent is {a_side}, " \
+            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the adjacent is {a_side}, " \
                         f"what is the opposite? Answer: {round(o_side)} "
 
-            answer = round(o_side)
+            answer = round(o_side, 1)
 
         else:
             quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
-                        f"Answer: {round(answer_h)} "
-            answer = round(answer_h)
+                        f"Answer: {round(answer_h, 1)} "
+            answer = round(answer_h, 1)
 
         guess = int_checker(quest_ask)
         if guess == answer:
