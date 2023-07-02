@@ -2,13 +2,13 @@ import math
 import random
 
 
-def int_checker(question):
+def float_checker(question):
     while True:
         response = input(question)
-        error = "Please enter a valid integer"
+        error = "Please enter a valid number (only 1 d.p)"
         if response != "":
             try:
-                response = int(response)
+                response = float(response)
                 if response < 1:
                     print(error)
                     continue
@@ -24,12 +24,12 @@ difficulty = input("Difficulty: ")
 if difficulty == "easy":
     a_side = random.randint(1, 10)
     o_side = random.randint(1, 10)
-    answer_h = math.sqrt(round(a_side ** 2 + o_side ** 2))
+    answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
     quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
-                f"Answer: {round(answer_h)} "
+                f"Answer: {round(answer_h, 1)} "
 
-    answer = round(answer_h)
-    guess = int_checker(quest_ask)
+    answer = round(answer_h, 1)
+    guess = float_checker(quest_ask)
 
     if guess == answer:
         print("Congratulations! You got the answer.")
@@ -42,10 +42,10 @@ elif difficulty == "medium":
     o_side = random.randint(10, 20)
     answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
     quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
-                f"Answer: {round(answer_h)} "
+                f"Answer: {round(answer_h, 1)} "
 
-    guess = int_checker(quest_ask)
-    answer = round(answer_h)
+    guess = float_checker(quest_ask)
+    answer = round(answer_h, 1)
 
     if guess == answer:
         print("Congratulations! You got the answer.")
@@ -56,7 +56,6 @@ elif difficulty == "medium":
 elif difficulty == "hard":
     sides = ["adjacent", "opposite", "hypotenuse"]
 
-    # had to ask chat gpt how to loop...
     random_side = random.choice(sides)
     a_side = random.randint(10, 20)
     o_side = random.randint(10, 20)
@@ -64,21 +63,21 @@ elif difficulty == "hard":
 
     # Answer given for testing purposes
     if random_side == "adjacent":
-        quest_ask = f"If the hypotenuse is {round(answer_h)} and the opposite is {o_side}, what is the adjacent? " \
-                    f"Answer: {round(a_side)} "
-        answer = round(a_side)
+        quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the opposite is {o_side}, what is the adjacent? " \
+                    f"Answer: {round(a_side, 1)} "
+        answer = round(a_side, 1)
 
     elif random_side == "opposite":
         quest_ask = f"If the hypotenuse is {round(answer_h)} and the adjacent is {a_side}, what is the opposite? " \
-                    f"Answer: {round(o_side)} "
-        answer = round(o_side)
+                    f"Answer: {round(o_side, 1)} "
+        answer = round(o_side, 1)
 
     else:
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
-                    f"Answer: {round(answer_h)} "
-        answer = round(answer_h)
+                    f"Answer: {round(answer_h, 1)} "
+        answer = round(answer_h, 1)
 
-    guess = int_checker(quest_ask)
+    guess = float_checker(quest_ask)
     if guess == answer:
         print("Congratulations! You got the answer.")
     else:

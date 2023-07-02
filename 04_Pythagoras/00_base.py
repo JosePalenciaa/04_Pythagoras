@@ -255,5 +255,3 @@ while rounds != "xxx":
     # ends game when user plays all rounds
     if rounds_played == rounds:
         break
-
-        # Looping mechanic for the actual quiz
