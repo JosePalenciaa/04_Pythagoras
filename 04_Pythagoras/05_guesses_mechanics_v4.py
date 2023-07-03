@@ -32,13 +32,13 @@ answer = 3
 
 # Guesses mechanics...
 while guesses_given > 0:
-    user_guess = guess_int_checker("Enter your guess: ")
+    guess = guess_int_checker("Enter your guess: ")
 
-    if user_guess in already_guessed:
+    if guess in already_guessed:
         print("You've already guessed that number...\n")
         continue
 
-    if user_guess == answer:
+    if guess == answer:
         print(f"Congratulations! You guessed the number on the {guesses_given} guess.\n")
         break
 
@@ -46,7 +46,7 @@ while guesses_given > 0:
         guesses_given -= 1
         print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
 
-    already_guessed.append(user_guess)
+    already_guessed.append(guess)
 
 if guesses_given == 0:
     print("You've run out of guesses. Game Over.")

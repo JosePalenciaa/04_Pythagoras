@@ -73,7 +73,7 @@ def difficult(question):
         print()
 
 
-# checks to see if user input is an integer, if <ENTER> gives output
+# checks to see if user input is a valid number, if <ENTER> gives output
 def guess_int_checker(question):
     while True:
         response = input(question)
@@ -82,10 +82,10 @@ def guess_int_checker(question):
             print("<ENTER> IS NOT AN ACCEPTED ANSWER\n")
             continue
 
-        error = "Please enter a valid integer\n"
+        error = "Please enter a valid number (only 1 d.p)\n"
 
         try:
-            response = int(response)
+            response = float(response)
 
             if response < 1:
                 print(error)
@@ -171,28 +171,15 @@ rounds = int_checker("How many rounds (<ENTER> for infinite): ")
 end_game = "no"
 while rounds != "xxx":
 
-    # If user inputs <ENTER>, there are infinite rounds
-    if rounds == "":
-        print()
-        heading = f"Round {rounds_played + 1} of Continuous Mode"
-
-    else:
-        print()
-        heading = f"Round {rounds_played + 1} of {rounds}"
-
-    print(heading)
-    rounds_played += 1
-
-    # Question generator goes here...
     if difficulty == "easy":
         a_side = random.randint(1, 10)
         o_side = random.randint(1, 10)
-        answer_h = math.sqrt(round(a_side ** 2 + o_side ** 2))
+        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
                     f"Answer: {round(answer_h, 1)} "
 
         answer = round(answer_h, 1)
-        guess = int_checker(quest_ask)
+        guess = guess_int_checker(quest_ask)
 
         if guess == answer:
             print("Congratulations! You got the answer.")
@@ -200,7 +187,6 @@ while rounds != "xxx":
             print(f"Wrong answer. The correct answer is {answer}.")
         print()
 
-    # medium difficulty - find hypotenuse, side length range from 10-20
     elif difficulty == "medium":
         a_side = random.randint(10, 20)
         o_side = random.randint(10, 20)
@@ -208,10 +194,9 @@ while rounds != "xxx":
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
                     f"Answer: {round(answer_h, 1)} "
 
-        guess = int_checker(quest_ask)
+        guess = guess_int_checker(quest_ask)
         answer = round(answer_h, 1)
 
-        # compares user guess to the answer (rounded to integers to make things easier)
         if guess == answer:
             print("Congratulations! You got the answer.")
         else:
@@ -221,23 +206,20 @@ while rounds != "xxx":
     elif difficulty == "hard":
         sides = ["adjacent", "opposite", "hypotenuse"]
 
-        # Randomly selects a side to make 'missing'
         random_side = random.choice(sides)
         a_side = random.randint(10, 20)
         o_side = random.randint(10, 20)
         answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
-        # adjacent, opposite, hypotenuse - missing side generator...
+        # Answer given for testing purposes
         if random_side == "adjacent":
-            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the opposite is {o_side}, " \
-                        f"what is the adjacent? Answer: {round(a_side)} "
-
+            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the opposite is {o_side}, what is the adjacent?" \
+                        f" Answer: {round(a_side, 1)} "
             answer = round(a_side, 1)
 
         elif random_side == "opposite":
-            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the adjacent is {a_side}, " \
-                        f"what is the opposite? Answer: {round(o_side)} "
-
+            quest_ask = f"If the hypotenuse is {round(answer_h)} and the adjacent is {a_side}, what is the opposite? " \
+                        f"Answer: {round(o_side, 1)} "
             answer = round(o_side, 1)
 
         else:
@@ -245,12 +227,18 @@ while rounds != "xxx":
                         f"Answer: {round(answer_h, 1)} "
             answer = round(answer_h, 1)
 
-        guess = int_checker(quest_ask)
+        guess = guess_int_checker(quest_ask)
         if guess == answer:
             print("Congratulations! You got the answer.")
         else:
             print(f"Wrong answer. The correct answer is {answer}.")
         print()
+
+    # Guess(es) value and already guessed list...
+    guesses_given = 3
+    already_guessed = []
+
+    # Guesses mechanics go here...
 
     # ends game when user plays all rounds
     if rounds_played == rounds:
