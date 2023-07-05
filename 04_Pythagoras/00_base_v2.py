@@ -171,11 +171,31 @@ guesses_given = 3
 already_guessed = []
 
 # Asks user how many rounds they want to play...
-rounds = int_checker("How many rounds (<ENTER> for infinite): ")
+while True:
+
+    rounds = int_checker("How many rounds (<ENTER> for infinite): ")
+
+    if rounds == "xxx":
+        print("Please play at least one round.\n")
+
+    else:
+        break
 
 # Looping mechanics for rounds
 end_game = "no"
 while True:
+
+    # Selects the heading, depending on if user is playing continuous mode or not
+    if rounds == "":
+        print()
+        heading = f"Round {rounds_played + 1} of Continuous Mode"
+
+    else:
+        print()
+        heading = f"Round {rounds_played + 1} of {rounds}"
+
+    # Displays the heading after each question
+    print(heading)
 
     if difficulty == "easy":
         a_side = random.randint(1, 10)
@@ -184,7 +204,7 @@ while True:
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
                     f"Answer: {round(answer_h, 1)} "
 
-        # the actual answer, used for comparison and rounded to 1 decimal point
+        # the actual answer, used for comparison, rounded to 1 decimal point
         answer = round(answer_h, 1)
 
         # loops as long as the user still has guesses remaining
@@ -200,7 +220,7 @@ while True:
             # compares the answer to users guess and outputs appropriate response, adds a round won to stats
             if guess == answer:
                 rounds_won += 1
-                print(f"Congratulations! You guessed the number on the {guesses_given}(st/nd/rd) guess.\n")
+                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
                 break
 
             elif guess == "xxx":
@@ -318,8 +338,6 @@ while True:
             else:
                 guesses_given -= 1
                 print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
-
-            already_guessed.append(guess)
 
             if guesses_given == 0:
                 rounds_lost += 1
