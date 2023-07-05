@@ -29,11 +29,12 @@ elif ask_diff == "moderate":
 else:
     mode = "hard"
 
-if mode == "easy" or mode == "moderate":
+if mode == "easy":
     a_side = random.randint(1, 10)
     o_side = random.randint(1, 10)
+    h_side = math.sqrt(a_side ** 2 + o_side ** 2)
 
-else:
+if mode == "moderate" or mode == "hard":
     a_side = random.randint(10, 20)
     o_side = random.randint(10, 20)
     h_side = math.sqrt(a_side ** 2 + o_side ** 2)

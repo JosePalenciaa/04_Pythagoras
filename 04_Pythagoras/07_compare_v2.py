@@ -3,7 +3,7 @@ def int_checker(question):
     while True:
         response = input(question)
 
-        error = "Please enter a valid integer (greater than 0)"
+        error = "Please enter a valid integer"
 
         if response != "":
             try:
@@ -19,9 +19,16 @@ def int_checker(question):
 
         return response
 
+
 # question for testing purposes...
+computer_answer = 10.122
 
+while True:
 
-ask_question = int_checker("How Many Fish Are There In The Ocean? ")
+    user_ans = int_checker("Guess a number: ")
 
-print("Accepted valid integer: ", ask_question)
+    if user_ans == computer_answer:
+        print("Correct Guess ✔")
+
+    else:
+        print("Wrong Guess")

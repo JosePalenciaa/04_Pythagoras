@@ -175,7 +175,7 @@ rounds = int_checker("How many rounds (<ENTER> for infinite): ")
 
 # Looping mechanics for rounds
 end_game = "no"
-while rounds_played < rounds:
+while True:
 
     if difficulty == "easy":
         a_side = random.randint(1, 10)
@@ -203,6 +203,10 @@ while rounds_played < rounds:
                 print(f"Congratulations! You guessed the number on the {guesses_given}(st/nd/rd) guess.\n")
                 break
 
+            elif guess == "xxx":
+                end_game = "yes"
+                break
+
             # if the user gets it wrong
             else:
                 guesses_given -= 1
@@ -220,14 +224,16 @@ while rounds_played < rounds:
         # Keeps track of how many rounds the player has played, adds one once they finish (win or lose)
         rounds_played += 1
 
-        # Ends game once user has run out of answers / guesses / attempts
-        if rounds_played == rounds:
+        # Ends game once user has run out of answers / guesses / attempts or if user uses exit code
+        if rounds_played == rounds or end_game == "yes":
             break
 
     elif difficulty == "medium":
         a_side = random.randint(10, 20)
         o_side = random.randint(10, 20)
         answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
+
+        # Answer given for testing purposes...
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
                     f"Answer: {round(answer_h, 1)} "
 
@@ -237,33 +243,33 @@ while rounds_played < rounds:
 
             guess = guess_float_checker(quest_ask)
 
-            while guesses_given > 0:
+            if guess in already_guessed:
+                print("You've already guessed that number...\n")
+                continue
 
-                guess = guess_float_checker(quest_ask)
+            if guess == answer:
+                rounds_won += 1
+                print(f"Congratulations! You guessed the number on the {guesses_given}(st/nd/rd) guess.\n")
+                break
 
-                if guess in already_guessed:
-                    print("You've already guessed that number...\n")
-                    continue
+            elif guess == "xxx":
+                end_game = "yes"
+                break
 
-                if guess == answer:
-                    rounds_won += 1
-                    print(f"Congratulations! You guessed the number on the {guesses_given} guess.\n")
-                    break
+            else:
+                guesses_given -= 1
+                print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
 
-                else:
-                    guesses_given -= 1
-                    print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
+            already_guessed.append(guess)
 
-                already_guessed.append(guess)
-
-                if guesses_given == 0:
-                    rounds_lost += 1
-                    print("You've run out of guesses. Game Over.")
-                    break
+            if guesses_given == 0:
+                rounds_lost += 1
+                print("You've run out of guesses. Game Over.")
+                break
 
         rounds_played += 1
 
-        if rounds_played == rounds:
+        if rounds_played == rounds or end_game == "yes":
             break
 
     elif difficulty == "hard":
@@ -302,7 +308,11 @@ while rounds_played < rounds:
 
             if guess == answer:
                 rounds_won += 1
-                print(f"Congratulations! You guessed the number on the {guesses_given} guess.\n")
+                print(f"Congratulations! You guessed the number on the {guesses_given}(st/nd/rd) guess.\n")
+                break
+
+            elif guess == "xxx":
+                end_game = "yes"
                 break
 
             else:
@@ -318,11 +328,18 @@ while rounds_played < rounds:
 
         rounds_played += 1
 
-        if rounds_played == rounds:
+        if rounds_played == rounds or end_game == "yes":
             break
+
 
 # Shows game statistics once user has finished round(s)
 
 
 # Thanks the user for playing the quiz
 print("Thanks for playing!")
+
+# testing...
+print("Rounds: ", rounds)
+print("Played: ", rounds_played)
+print("Won: ", rounds_won)
+print("Lost: ", rounds_lost)
