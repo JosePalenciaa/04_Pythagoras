@@ -166,10 +166,6 @@ rounds_played = 0
 rounds_won = 0
 rounds_lost = 0
 
-# guesses given and list
-guesses_given = 3
-already_guessed = []
-
 # Asks user how many rounds they want to play...
 while True:
 
@@ -196,6 +192,10 @@ while True:
 
     # Displays the heading after each question
     print(heading)
+
+    # guesses given and list, placed in loop so it resets when a new round starts
+    guesses_given = 3
+    already_guessed = []
 
     if difficulty == "easy":
         a_side = random.randint(1, 10)
@@ -269,7 +269,7 @@ while True:
 
             if guess == answer:
                 rounds_won += 1
-                print(f"Congratulations! You guessed the number on the {guesses_given}(st/nd/rd) guess.\n")
+                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
                 break
 
             elif guess == "xxx":
@@ -307,7 +307,7 @@ while True:
             answer = round(a_side, 1)
 
         elif random_side == "opposite":
-            quest_ask = f"If the hypotenuse is {round(answer_h)} and the adjacent is {a_side}, what is the opposite? " \
+            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the adjacent is {a_side}, what is the opposite? " \
                         f"Answer: {round(o_side, 1)} "
             answer = round(o_side, 1)
 
@@ -315,8 +315,6 @@ while True:
             quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
                         f"Answer: {round(answer_h, 1)} "
             answer = round(answer_h, 1)
-
-        guess = guess_float_checker(quest_ask)
 
         while guesses_given > 0:
 
@@ -328,7 +326,7 @@ while True:
 
             if guess == answer:
                 rounds_won += 1
-                print(f"Congratulations! You guessed the number on the {guesses_given}(st/nd/rd) guess.\n")
+                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
                 break
 
             elif guess == "xxx":
@@ -350,14 +348,24 @@ while True:
             break
 
 
-# Shows game statistics once user has finished round(s)
+# Shows game statistics once user has finished round(s)...
 
+# Gives the percentage forms of rounds won, lost, and not played (all rounded to 1 dp)
+percent_win = round(rounds_won / rounds_played * 100, 1)
+percent_lose = round(rounds_lost / rounds_played * 100, 1)
+percent_not_played = round(100 - percent_lose - percent_win, 1)
+
+print("\n**** Game Statistics ****")
+# Changes depending on if user selected a set value, or infinite rounds
+if rounds == "":
+    print(f"Round(s) selected: INFINITE")
+
+else:
+    print(f"Round(s) selected: {rounds}")
+
+print(f"You won: {percent_win}%")
+print(f"You lost: {percent_lose}%")
+print(f"You didn't play: {percent_not_played}%")
 
 # Thanks the user for playing the quiz
-print("Thanks for playing!")
-
-# testing...
-print("Rounds: ", rounds)
-print("Played: ", rounds_played)
-print("Won: ", rounds_won)
-print("Lost: ", rounds_lost)
+print("\nThanks for playing!")

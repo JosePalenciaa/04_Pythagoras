@@ -166,10 +166,6 @@ rounds_played = 0
 rounds_won = 0
 rounds_lost = 0
 
-# guesses given and list
-guesses_given = 3
-already_guessed = []
-
 # Asks user how many rounds they want to play...
 while True:
 
@@ -196,6 +192,10 @@ while True:
 
     # Displays the heading after each question
     print(heading)
+
+    # guesses given and list, placed in loop so it resets when a new round starts
+    guesses_given = 3
+    already_guessed = []
 
     if difficulty == "easy":
         a_side = random.randint(1, 10)
@@ -269,7 +269,7 @@ while True:
 
             if guess == answer:
                 rounds_won += 1
-                print(f"Congratulations! You guessed the number on the {guesses_given}(st/nd/rd) guess.\n")
+                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
                 break
 
             elif guess == "xxx":
@@ -307,7 +307,7 @@ while True:
             answer = round(a_side, 1)
 
         elif random_side == "opposite":
-            quest_ask = f"If the hypotenuse is {round(answer_h)} and the adjacent is {a_side}, what is the opposite? " \
+            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the adjacent is {a_side}, what is the opposite? " \
                         f"Answer: {round(o_side, 1)} "
             answer = round(o_side, 1)
 
@@ -315,8 +315,6 @@ while True:
             quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
                         f"Answer: {round(answer_h, 1)} "
             answer = round(answer_h, 1)
-
-        guess = guess_float_checker(quest_ask)
 
         while guesses_given > 0:
 
@@ -328,7 +326,7 @@ while True:
 
             if guess == answer:
                 rounds_won += 1
-                print(f"Congratulations! You guessed the number on the {guesses_given}(st/nd/rd) guess.\n")
+                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
                 break
 
             elif guess == "xxx":
@@ -351,6 +349,12 @@ while True:
 
 
 # Shows game statistics once user has finished round(s)
+
+percent_win = rounds_won / rounds_played * 100
+percent_lose = rounds_lost / rounds_played * 100
+
+print("\n*** Game Statistics ***")
+print(f"You won {percent_win:.1f}% and lost {percent_lose:.1f}% of the rounds.")
 
 
 # Thanks the user for playing the quiz

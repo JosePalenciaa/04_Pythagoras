@@ -166,10 +166,6 @@ rounds_played = 0
 rounds_won = 0
 rounds_lost = 0
 
-# guesses given and list
-guesses_given = 3
-already_guessed = []
-
 # Asks user how many rounds they want to play...
 while True:
 
@@ -197,7 +193,12 @@ while True:
     # Displays the heading after each question
     print(heading)
 
+    # guesses given and list
+    guesses_given = 3
+    already_guessed = []
+
     if difficulty == "easy":
+
         a_side = random.randint(1, 10)
         o_side = random.randint(1, 10)
         answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
@@ -238,8 +239,8 @@ while True:
             # ends game one user runs out of guesses, adds a round
             if guesses_given == 0:
                 rounds_lost += 1
-                print("You've run out of guesses. Game Over.")
-                continue
+                print("You've run out of guesses. Round Over.")
+                break
 
         # Keeps track of how many rounds the player has played, adds one once they finish (win or lose)
         rounds_played += 1
