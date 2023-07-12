@@ -213,48 +213,6 @@ while True:
         # The actual answer, used for comparison, rounded to 1 decimal point
         answer = round(answer_h, 1)
 
-        # Loops as long as the user still has guesses remaining
-        while guesses_given > 0:
-
-            guess = guess_float_checker(quest_ask)
-
-            # Prevents user from inputting the same guess, does not use a guess
-            if guess in already_guessed:
-                print("You've already guessed that number...\n")
-                continue
-
-            # Compares the answer to users guess and outputs appropriate response, adds a round won to stats
-            if guess == answer:
-                rounds_won += 1
-                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
-                break
-
-            # Quiz ends when the user inputs the exit code
-            elif guess == "xxx":
-                end_game = "yes"
-                break
-
-            # If the user gets it wrong
-            else:
-                guesses_given -= 1
-                print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
-
-            # Places the users guesses in a list - prevents duplicate answers
-            already_guessed.append(guess)
-
-            # ends game when user runs out of guesses, adds a round lost to the statistics
-            if guesses_given == 0:
-                rounds_lost += 1
-                print("You've run out of guesses. Game Over.")
-                break
-
-        # Keeps track of how many rounds the player has played, adds one once they finish (win or lose)
-        rounds_played += 1
-
-        # Ends game once user has run out of answers / guesses / attempts or if user uses exit code
-        if rounds_played == rounds or end_game == "yes":
-            break
-
     # Side values and answer the difficulty is "Medium"
     elif difficulty == "medium":
         a_side = random.randint(10, 20)
@@ -266,39 +224,6 @@ while True:
                     f"Answer: {round(answer_h, 1)} "
 
         answer = round(answer_h, 1)
-
-        while guesses_given > 0:
-
-            guess = guess_float_checker(quest_ask)
-
-            if guess in already_guessed:
-                print("You've already guessed that number...\n")
-                continue
-
-            if guess == answer:
-                rounds_won += 1
-                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
-                break
-
-            elif guess == "xxx":
-                end_game = "yes"
-                break
-
-            else:
-                guesses_given -= 1
-                print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
-
-            already_guessed.append(guess)
-
-            if guesses_given == 0:
-                rounds_lost += 1
-                print("You've run out of guesses. Round Over.")
-                continue
-
-        rounds_played += 1
-
-        if rounds_played == rounds or end_game == "yes":
-            break
 
     # Side values and answer the difficulty is "Hard"
     elif difficulty == "hard":
@@ -328,36 +253,36 @@ while True:
 
             answer = round(answer_h, 1)
 
-        while guesses_given > 0:
+    while guesses_given > 0:
 
-            guess = guess_float_checker(quest_ask)
+        guess = guess_float_checker(quest_ask)
 
-            if guess in already_guessed:
-                print("You've already guessed that number...\n")
-                continue
+        if guess in already_guessed:
+            print("You've already guessed that number...\n")
+            continue
 
-            if guess == answer:
-                rounds_won += 1
-                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
-                break
-
-            elif guess == "xxx":
-                end_game = "yes"
-                break
-
-            else:
-                guesses_given -= 1
-                print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
-
-            if guesses_given == 0:
-                rounds_lost += 1
-                print("You've run out of guesses. Game Over.")
-                break
-
-        rounds_played += 1
-
-        if rounds_played == rounds or end_game == "yes":
+        if guess == answer:
+            rounds_won += 1
+            print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
             break
+
+        elif guess == "xxx":
+            end_game = "yes"
+            break
+
+        else:
+            guesses_given -= 1
+            print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
+
+        if guesses_given == 0:
+            rounds_lost += 1
+            print("You've run out of guesses. Game Over.")
+            break
+
+    rounds_played += 1
+
+    if rounds_played == rounds or end_game == "yes":
+        break
 
 
 # Shows game statistics once user has finished round(s)...

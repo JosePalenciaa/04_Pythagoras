@@ -150,12 +150,21 @@ ask_diff = difficult("What difficulty would you like? ")
 
 if ask_diff == "easy":
     difficulty = "easy"
+    a_side = random.randint(1, 10)
+    o_side = random.randint(1, 10)
+    answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
 elif ask_diff == "medium":
     difficulty = "medium"
+    a_side = random.randint(10, 20)
+    o_side = random.randint(10, 20)
+    answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
 elif ask_diff == "hard":
     difficulty = "hard"
+    a_side = random.randint(10, 20)
+    o_side = random.randint(10, 20)
+    answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
 # Outputs the selected difficulty
 print(f"You've selected the {ask_diff} difficulty")
@@ -202,9 +211,6 @@ while True:
 
     # Side values and answer the difficulty is "Easy"
     if difficulty == "easy":
-        a_side = random.randint(1, 10)
-        o_side = random.randint(1, 10)
-        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
         # Question which the user is asked
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
@@ -215,9 +221,6 @@ while True:
 
     # Side values and answer the difficulty is "Medium"
     elif difficulty == "medium":
-        a_side = random.randint(10, 20)
-        o_side = random.randint(10, 20)
-        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
         # Answer given for testing purposes...
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
@@ -232,9 +235,6 @@ while True:
         sides = ["adjacent", "opposite", "hypotenuse"]
 
         random_side = random.choice(sides)
-        a_side = random.randint(10, 20)
-        o_side = random.randint(10, 20)
-        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
         # Questions - determined by which side was chosen above
         if random_side == "adjacent":
@@ -274,6 +274,8 @@ while True:
             guesses_given -= 1
             print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
 
+            already_guessed.append(guess)
+
         if guesses_given == 0:
             rounds_lost += 1
             print("You've run out of guesses. Game Over.")
@@ -296,7 +298,6 @@ print("\n**** Game Statistics ****")
 # Changes depending on if user selected a set value, or infinite rounds
 if rounds == "":
     print(f"Round(s) selected: INFINITE")
-
 else:
     print(f"Round(s) selected: {rounds}")
 
