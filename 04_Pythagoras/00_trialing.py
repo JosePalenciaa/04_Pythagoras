@@ -146,6 +146,7 @@ print("!!! Let's Begin !!!")
 print("===================\n")
 
 # Difficulty selection / asks user what diff...
+# Side values placed here instead
 ask_diff = difficult("What difficulty would you like? ")
 
 if ask_diff == "easy":
