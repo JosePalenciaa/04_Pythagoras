@@ -14,7 +14,7 @@ def instructions():
           "\n• Formulas:\n\tHypotenuse | a² + b² = c²\n\tOpposite | c² - a² = b²\n\tAdjacent | c² - b² = a²"
           "\n\tHypotenuse = c | Opposite / Adjacent = b / a"
           "\n\n• First select a difficulty (easy / medium / hard)."
-          "\n• You are given 3 attempts. "
+          "\n• You are given 3 attempts - Answer with 'xxx' to end quiz. "
           "\n• Solve the missing side. "
           "\n• Round your answer to one decimal point."
           "\n• How smart do you think you are?")
@@ -112,7 +112,7 @@ difficulty = ""
 
 # Main Routine goes here...
 
-# Introduction / title of game
+# Introduction / title of the quiz
 print("######################################")
 print("!!! Welcome to the Pythagoras Quiz !!!")
 print("######################################")
@@ -181,7 +181,7 @@ while True:
         break
 
 # Looping mechanics for rounds
-end_game = "no"
+end_quiz = "no"
 while True:
 
     # Selects the heading, depending on if user is playing INFINITE mode or not
@@ -265,9 +265,9 @@ while True:
             print(f"Congratulations! You got the answer with {attempts_given - 1} attempt(s) remaining.\n")
             break
 
-        # Ends game if user inputs exit code
+        # Ends quiz if user inputs exit code
         elif user_answer == "xxx":
-            end_game = "yes"
+            end_quiz = "yes"
             break
 
         # If users answer is incorrect, tell them and remove 1 attempt from the 3 given
@@ -287,18 +287,25 @@ while True:
     # Once loop finishes, a round also finishes
     rounds_played += 1
 
-    # Ends the game if user plays all rounds or inputs the exit code
-    if rounds_played == rounds or end_game == "yes":
+    # Ends the quiz if user plays all rounds or inputs the exit code
+    # Different outputs because of two different scenarios
+
+    if rounds_played == rounds:
+        print("\nAll rounds have been completed.")
         break
 
-# Shows game statistics once user has finished round(s)...
+    elif end_quiz == "yes":
+        print("\nYou have chosen to end the quiz, no round(s).")
+        break
+
+# Shows quiz statistics once user has finished round(s)...
 
 # Gives the percentage forms of rounds won, lost, and not played (all rounded to 1 dp)
 percent_win = round(rounds_won / rounds_played * 100, 1)
 percent_lose = round(rounds_lost / rounds_played * 100, 1)
 percent_not_played = round(100 - percent_lose - percent_win, 1)
 
-print("\n**** Game Statistics ****")
+print("\n**** quiz Statistics ****")
 # Changes depending on if user selected a set value, or infinite rounds
 if rounds == "":
     print(f"Round(s) selected: INFINITE")
