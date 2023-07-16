@@ -33,7 +33,7 @@ yesno_list = ["yes", "no", "why"]
 while True:
 
     display_instructions = yes_no_why("Would you like to see Instructions? ")
-    # Gets angry at user if they respond with 'why', loop continues
+    # Gets angry at user if they respond with 'why', loop continues until user answers 'yes' or 'no'
     if display_instructions == "why":
         print("Because I said so!!!")
         continue
@@ -48,3 +48,5 @@ while True:
     elif display_instructions == "no":
         print("Alright then. If you say so...")
         break
+
+print("program continues")

@@ -16,7 +16,7 @@ def instructions():
           "\n\n• First select a difficulty (easy / medium / hard)."
           "\n• You are given 3 attempts - Answer with 'xxx' to end quiz. "
           "\n• Solve the missing side. "
-          "\n• Round your answer to one decimal point."
+          "\n• Hypotenuse should be rounded to 1dp | Adjacent and opposite to integers."
           "\n• How smart do you think you are?")
 
 
@@ -314,9 +314,9 @@ else:
     print(f"Round(s) selected: {rounds}")
 
 # Percentages - win / lose / not played
-print(f"You won: {percent_win}%")
-print(f"You lost: {percent_lose}%")
-print(f"You didn't play: {percent_not_played}%")
+print(f"You won: {rounds_won} round(s), {percent_win}%")
+print(f"You lost: {rounds_lost} round(s), {percent_lose}%")
+print(f"You didn't play: {rounds_played - rounds_lost - rounds_won} round(s), {percent_not_played}%")
 
 # Thanks the user for playing the quiz
 print("\nThanks for playing!")

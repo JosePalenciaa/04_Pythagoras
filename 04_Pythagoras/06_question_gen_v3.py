@@ -25,8 +25,7 @@ if difficulty == "easy":
     a_side = random.randint(1, 10)
     o_side = random.randint(1, 10)
     answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
-    quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
-                f"Answer: {round(answer_h, 1)} "
+    quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? "
 
     answer = round(answer_h, 1)
     guess = float_checker(quest_ask)
@@ -41,8 +40,7 @@ elif difficulty == "medium":
     a_side = random.randint(10, 20)
     o_side = random.randint(10, 20)
     answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
-    quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
-                f"Answer: {round(answer_h, 1)} "
+    quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? "
 
     guess = float_checker(quest_ask)
     answer = round(answer_h, 1)
@@ -63,18 +61,15 @@ elif difficulty == "hard":
 
     # Answer given for testing purposes
     if random_side == "adjacent":
-        quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the opposite is {o_side}, what is the adjacent? " \
-                    f"Answer: {round(a_side, 1)} "
+        quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the opposite is {o_side}, what is the adjacent? "
         answer = round(a_side, 1)
 
     elif random_side == "opposite":
-        quest_ask = f"If the hypotenuse is {round(answer_h)} and the adjacent is {a_side}, what is the opposite? " \
-                    f"Answer: {round(o_side, 1)} "
+        quest_ask = f"If the hypotenuse is {round(answer_h)} and the adjacent is {a_side}, what is the opposite? "
         answer = round(o_side, 1)
 
     else:
-        quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
-                    f"Answer: {round(answer_h, 1)} "
+        quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? "
         answer = round(answer_h, 1)
 
     guess = float_checker(quest_ask)

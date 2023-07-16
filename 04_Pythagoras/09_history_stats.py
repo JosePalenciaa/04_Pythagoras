@@ -4,7 +4,7 @@ rounds_lost = 0
 rounds_won = 0
 
 # testing purposes...
-for item in range(0, 5):
+for item in range(1, 6):
     result = input("Choose result: ")
 
     outcome = f"Round {item}: {result}"
@@ -20,7 +20,20 @@ for item in range(0, 5):
 
     game_summary.append(outcome)
 
+# Calculate game stats
+percent_win = round(rounds_won / rounds_played * 100, 1)
+percent_lose = round(rounds_lost / rounds_played * 100, 1)
+percent_not_played = round(100 - percent_lose - percent_win, 1)
+
 print()
-print("*** Game History ***")
-for game in game_summary:
-    print(game)
+
+# displays game stats with %
+# values to nearest who number
+print("*** Game Statistics ***")
+# Percentages - win / lose / not played
+print(f"You won: {percent_win}%")
+print(f"You lost: {percent_lose}%")
+print(f"You didn't play: {percent_not_played}%")
+
+# Thanks the user for playing the quiz
+print("\nThanks for playing!")

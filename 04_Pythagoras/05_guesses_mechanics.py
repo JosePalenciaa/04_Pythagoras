@@ -31,10 +31,10 @@ while guesses_given > 0:
     user_guess = int_checker("Enter your guess: ")
 
     if user_guess == answer:
-        print("Congratulations! You guessed correctly.")
+        print("Congratulations! Your answer is correct.")
 
     elif user_guess != answer:
-        print("You've guessed incorrectly.")
+        print("Your answer is incorrect.")
 
     guesses_given -= 1
 

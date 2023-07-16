@@ -39,7 +39,7 @@ def int_checker(question):
     while True:
         response = input(question)
 
-        error = "Please enter a valid integer greater than 0\n"
+        error = "Please enter a valid integer greater than 0"
 
         if response == "xxx":
             return response
@@ -140,32 +140,22 @@ while True:
         print("Alright then. If you say so...")
         break
 
-# Title labeling the start of the quiz
+
 print("\n===================")
 print("!!! Let's Begin !!!")
 print("===================\n")
 
 # Difficulty selection / asks user what diff...
-# Side values placed here instead
 ask_diff = difficult("What difficulty would you like? ")
 
 if ask_diff == "easy":
     difficulty = "easy"
-    a_side = random.randint(1, 10)
-    o_side = random.randint(1, 10)
-    answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
 elif ask_diff == "medium":
     difficulty = "medium"
-    a_side = random.randint(10, 20)
-    o_side = random.randint(10, 20)
-    answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
 elif ask_diff == "hard":
     difficulty = "hard"
-    a_side = random.randint(10, 20)
-    o_side = random.randint(10, 20)
-    answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
 # Outputs the selected difficulty
 print(f"You've selected the {ask_diff} difficulty")
@@ -179,14 +169,11 @@ rounds_lost = 0
 # Asks user how many rounds they want to play...
 while True:
 
-    # Asks the user how many rounds they want to play, or if they want infinite rounds
     rounds = int_checker("How many rounds (<ENTER> for infinite): ")
 
-    # Makes the user play at least 1 round when they try quiting prematurely
     if rounds == "xxx":
         print("Please play at least one round.\n")
 
-    # If the users input != "xxx" the loop breaks and the program continues
     else:
         break
 
@@ -194,10 +181,10 @@ while True:
 end_game = "no"
 while True:
 
-    # Selects the heading, depending on if user is playing INFINITE mode or not
+    # Selects the heading, depending on if user is playing continuous mode or not
     if rounds == "":
         print()
-        heading = f"Round {rounds_played + 1} of INFINITE Mode"
+        heading = f"Round {rounds_played + 1} of Continuous Mode"
 
     else:
         print()
@@ -206,22 +193,65 @@ while True:
     # Displays the heading after each question
     print(heading)
 
-    # guesses given and list, placed in a loop - resets when a new round starts
+    # guesses given and list, placed in loop so it resets when a new round starts
     guesses_given = 3
     already_guessed = []
 
-    # Side values and answer the difficulty is "Easy"
     if difficulty == "easy":
-
-        # Question which the user is asked
+        a_side = random.randint(1, 10)
+        o_side = random.randint(1, 10)
+        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
                     f"Answer: {round(answer_h, 1)} "
 
-        # The actual answer, used for comparison, rounded to 1 decimal point
+        # the actual answer, used for comparison, rounded to 1 decimal point
         answer = round(answer_h, 1)
 
-    # Side values and answer the difficulty is "Medium"
+        # loops as long as the user still has guesses remaining
+        while guesses_given > 0:
+
+            guess = guess_float_checker(quest_ask)
+
+            # prevents user from inputting the same guess, does not use a guess
+            if guess in already_guessed:
+                print("You've already guessed that number...\n")
+                continue
+
+            # compares the answer to users guess and outputs appropriate response, adds a round won to stats
+            if guess == answer:
+                rounds_won += 1
+                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
+                break
+
+            elif guess == "xxx":
+                end_game = "yes"
+                break
+
+            # if the user gets it wrong
+            else:
+                guesses_given -= 1
+                print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
+
+            # places the users guesses in a list
+            already_guessed.append(guess)
+
+            # ends game one user runs out of guesses, adds a round
+            if guesses_given == 0:
+                rounds_lost += 1
+                print("You've run out of guesses. Game Over.")
+                break
+
+        # Keeps track of how many rounds the player has played, adds one once they finish (win or lose)
+        rounds_played += 1
+
+        # Ends game once user has run out of answers / guesses / attempts or if user uses exit code
+        if rounds_played == rounds or end_game == "yes":
+            break
+
     elif difficulty == "medium":
+        a_side = random.randint(10, 20)
+        o_side = random.randint(10, 20)
+        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
         # Answer given for testing purposes...
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
@@ -229,15 +259,48 @@ while True:
 
         answer = round(answer_h, 1)
 
-    # Side values and answer the difficulty is "Hard"
-    elif difficulty == "hard":
+        while guesses_given > 0:
 
-        # Randomly selects a side to generate a question related to it
+            guess = guess_float_checker(quest_ask)
+
+            if guess in already_guessed:
+                print("You've already guessed that number...\n")
+                continue
+
+            if guess == answer:
+                rounds_won += 1
+                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
+                break
+
+            elif guess == "xxx":
+                end_game = "yes"
+                break
+
+            else:
+                guesses_given -= 1
+                print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
+
+            already_guessed.append(guess)
+
+            if guesses_given == 0:
+                rounds_lost += 1
+                print("You've run out of guesses. Round Over.")
+                continue
+
+        rounds_played += 1
+
+        if rounds_played == rounds or end_game == "yes":
+            break
+
+    elif difficulty == "hard":
         sides = ["adjacent", "opposite", "hypotenuse"]
 
         random_side = random.choice(sides)
+        a_side = random.randint(10, 20)
+        o_side = random.randint(10, 20)
+        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
-        # Questions - determined by which side was chosen above
+        # Answer given for testing purposes
         if random_side == "adjacent":
             quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the opposite is {o_side}, what is the adjacent?" \
                         f" Answer: {round(a_side, 1)} "
@@ -251,61 +314,54 @@ while True:
         else:
             quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? " \
                         f"Answer: {round(answer_h, 1)} "
-
             answer = round(answer_h, 1)
 
-    while guesses_given > 0:
+        while guesses_given > 0:
 
-        guess = guess_float_checker(quest_ask)
+            guess = guess_float_checker(quest_ask)
 
-        if guess in already_guessed:
-            print("You've already guessed that number...\n")
-            continue
+            if guess in already_guessed:
+                print("You've already guessed that number...\n")
+                continue
 
-        if guess == answer:
-            rounds_won += 1
-            print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
+            if guess == answer:
+                rounds_won += 1
+                print(f"Congratulations! You got the answer with {guesses_given - 1} guess(es) remaining.\n")
+                break
+
+            elif guess == "xxx":
+                end_game = "yes"
+                break
+
+            else:
+                guesses_given -= 1
+                print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
+
+            if guesses_given == 0:
+                rounds_lost += 1
+                print("You've run out of guesses. Game Over.")
+                break
+
+        rounds_played += 1
+
+        if rounds_played == rounds or end_game == "yes":
             break
 
-        elif guess == "xxx":
-            end_game = "yes"
-            break
 
-        else:
-            guesses_given -= 1
-            print(f"You've guessed incorrectly, {guesses_given} guess(es) remaining. Try Again.\n")
+# Shows game statistics once user has finished round(s)
 
-            already_guessed.append(guess)
+percent_win = rounds_won / rounds_played * 100
+percent_lose = rounds_lost / rounds_played * 100
 
-        if guesses_given == 0:
-            rounds_lost += 1
-            print("You've run out of guesses. Game Over.")
-            break
+print("\n*** Game Statistics ***")
+print(f"You won {percent_win:.1f}% and lost {percent_lose:.1f}% of the rounds.")
 
-    rounds_played += 1
-
-    if rounds_played == rounds or end_game == "yes":
-        break
-
-
-# Shows game statistics once user has finished round(s)...
-
-# Gives the percentage forms of rounds won, lost, and not played (all rounded to 1 dp)
-percent_win = round(rounds_won / rounds_played * 100, 1)
-percent_lose = round(rounds_lost / rounds_played * 100, 1)
-percent_not_played = round(100 - percent_lose - percent_win, 1)
-
-print("\n**** Game Statistics ****")
-# Changes depending on if user selected a set value, or infinite rounds
-if rounds == "":
-    print(f"Round(s) selected: INFINITE")
-else:
-    print(f"Round(s) selected: {rounds}")
-
-# Percentages - win / lose / not played
-print(f"You won: {percent_win}%")
-print(f"You lost: {percent_lose}%")
-print(f"You didn't play: {percent_not_played}%")
 
 # Thanks the user for playing the quiz
-print("\nThanks for playing!")
+print("Thanks for playing!")
+
+# testing...
+print("Rounds: ", rounds)
+print("Played: ", rounds_played)
+print("Won: ", rounds_won)
+print("Lost: ", rounds_lost)

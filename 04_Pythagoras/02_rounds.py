@@ -49,4 +49,7 @@ while rounds != "xxx":
     if rounds_played == rounds:
         break
 
+    elif choose == "xxx":
+        break
+
 print("Thank you for playing")
