@@ -1,5 +1,5 @@
 # Yes / no / why response function
-def user_input(question):
+def user_input(question, error):
     while True:
         response = input(question).lower()
 
@@ -11,7 +11,7 @@ def user_input(question):
             if response == item[0] or response == item:
                 return item
 
-        print("Please enter a valid response")
+        print(error)
         print()
 
 
@@ -19,7 +19,11 @@ yesno_list = ["yes", "no", "why", "xxx"]
 diff_list = ["easy", "medium", "hard", "xxx"]
 
 # Testing purposes...
-while True:
-    testing = user_input("Input anything: ")
+yesno = user_input("Input anything: ", "Please enter a valid response (y / n / w)")
+print(yesno)
 
-    print(testing)
+diff = user_input("Input a difficulty: ", "Please enter a valid difficulty (e / m / h)")
+print(diff)
+
+print()
+print(f"Response: {yesno}\nDifficulty: {diff}")
