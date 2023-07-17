@@ -15,9 +15,11 @@ def user_input(question):
         print()
 
 
-yesno_list = ["yes", "no", "xxx"]
-diff_list = ["easy", "medium", "hard"]
+yesno_list = ["yes", "no", "why", "xxx"]
+diff_list = ["easy", "medium", "hard", "xxx"]
 
-testing = user_input("Input anything: ")
+# Testing purposes...
+while True:
+    testing = user_input("Input anything: ")
 
-print(testing)
+    print(testing)
