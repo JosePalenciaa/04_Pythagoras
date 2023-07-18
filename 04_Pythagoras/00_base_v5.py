@@ -281,7 +281,7 @@ while True:
         # If the user runs out of attempts, ends the round
         if attempts_given == 0:
             rounds_lost += 1
-            print("You've run out of attempts. Round Over.")
+            print(f"You've run out of attempts: The answer was {answer}. Round Over.")
             break
 
     # Once loop finishes, a round also finishes
@@ -308,15 +308,17 @@ percent_not_played = round(100 - percent_lose - percent_win, 1)
 print("\n**** quiz Statistics ****")
 # Changes depending on if user selected a set value, or infinite rounds
 if rounds == "":
-    print(f"Round(s) selected: INFINITE")
+    print(f"Round(s) selected: INFINITE rounds")
 
 else:
-    print(f"Round(s) selected: {rounds}")
+    print(f"Round(s) selected: {rounds} round(s)")
 
 # Percentages - win / lose / not played
+print(f"You played: {rounds_played} round(s)")
+print("\nOf the rounds you've played: ")
+print(f"You didn't play: {rounds_played - rounds_lost - rounds_won} round(s), {percent_not_played}%")
 print(f"You won: {rounds_won} round(s), {percent_win}%")
 print(f"You lost: {rounds_lost} round(s), {percent_lose}%")
-print(f"You didn't play: {rounds_played - rounds_lost - rounds_won} round(s), {percent_not_played}%")
 
 # Thanks the user for playing the quiz
 print("\nThanks for playing!")
