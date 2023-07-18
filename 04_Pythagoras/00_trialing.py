@@ -4,34 +4,6 @@ import random
 
 # Functions go here...
 
-# Displays instructions function
-def instructions():
-    print("---------------------")
-    print("**** How to Play ****")
-    print("---------------------")
-    print()
-    print("Your goal is to calculate the missing side using the 'Pythagorean Theorem'..."
-          "\n• Formulas:\n\tHypotenuse | a² + b² = c²\n\tOpposite | c² - a² = b²\n\tAdjacent | c² - b² = a²"
-          "\n\tHypotenuse = c | Opposite / Adjacent = b / a"
-          "\n\n• First select a difficulty."
-          "\n• You are given 3 attempts. "
-          "\n• Solve the missing side. "
-          "\n• Round your answer to the nearest decimal place."
-          "\n• Can you win?")
-
-
-# Yes / no / why response function
-def yes_no_why(question):
-    while True:
-        response = input(question).lower()
-
-        for item in yesno_list:
-            if response == item[0] or response == item:
-                return item
-
-        print("Please enter a valid response (yes / no / why)")
-        print()
-
 
 # Integer checker, used for components consisting of checking integers
 def int_checker(question):
@@ -102,44 +74,10 @@ def guess_float_checker(question):
 
 # Lists go here...
 
-# list of accepted values for yes / no checker
-yesno_list = ["yes", "no", "why"]
-
 # list for accepted values of difficulty
 diff_list = ["easy", "medium", "hard"]
 
 difficulty = ""
-
-# Main Routine goes here...
-
-# Introduction / title of game
-print("######################################")
-print("!!! Welcome to the Pythagoras Quiz !!!")
-print("######################################")
-print()
-
-# Looping so user response of 'why' gives the response, and asks the question again
-while True:
-    # Asks user for a response (related to the instructions)
-    display_instructions = yes_no_why("Do you want to see the INSTRUCTIONS? ")
-
-    # Gets angry at user if they respond with 'why', loop continues
-    if display_instructions == "why":
-        print("Because I said so!!!")
-        print()
-        continue
-
-    # Displays instructions of user says 'yes', loop breaks and continues with rest of code
-    elif display_instructions == "yes":
-        print()
-        instructions()
-        break
-
-    # Outputs a statement if user says 'no', loop breaks and continues with rest of code
-    elif display_instructions == "no":
-        print("Alright then. If you say so...")
-        break
-
 
 print("\n===================")
 print("!!! Let's Begin !!!")

@@ -1,5 +1,5 @@
 # Integer checker, used for components consisting of checking integers
-def number_checker(question, allow_floats=True):
+def number_checker(question, allow_floats="yes"):
 
     while True:
         response = input(question)
@@ -20,5 +20,9 @@ def number_checker(question, allow_floats=True):
             except ValueError:
                 print(error)
                 continue
+
+        try:
+            if allow_floats == "yes":
+                response = float(question)
 
         return response
