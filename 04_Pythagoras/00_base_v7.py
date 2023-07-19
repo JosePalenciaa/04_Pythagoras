@@ -20,17 +20,21 @@ def instructions():
           "\n• How smart do you think you are?")
 
 
-# Number checker function - given the situation, the user can input both integers
+# Number checker function - given the situation, the user can input both integers and floats, or exclusively integers
 def number_checker(question, allow_floats="yes"):
 
+    # Looping that continues until the user inputs a valid response to the question
     while True:
         response = input(question)
 
+        # Used as the exit code
         if response == "xxx":
             return response
 
+        # When the user does not input <ENTER> / when they select infinite mode
         elif response != "":
             try:
+                # Allows floats (numbers and integers) - Used to check if the user inputs a valid answer
                 if allow_floats == "yes":
                     response = float(response)
 
@@ -39,6 +43,7 @@ def number_checker(question, allow_floats="yes"):
                         print("Please input a valid NUMBER (> 1)\n")
                         continue
 
+                # Allows only integers - Used to select and validate the # of questions
                 elif allow_floats == "no":
                     response = int(response)
 
@@ -46,6 +51,7 @@ def number_checker(question, allow_floats="yes"):
                         print("Please input a valid integer (> 0)\n")
                         continue
 
+            # Outputs an error when the user inputs 'something' that would cause a ValueError
             except ValueError:
                 print("<ValueError> That is an invalid INTEGER / NUMBER\n")
                 continue
@@ -58,6 +64,7 @@ def user_input(question, valid_lists, error):
     while True:
         response = input(question).lower()
 
+        # Searches and checks the list (depending on the question) for valid responses, otherwise prints an error
         for item in valid_lists:
             if response == item[0] or response == item:
                 return item
@@ -84,7 +91,7 @@ print("!!! Welcome to the Pythagoras Quiz !!!")
 print("######################################")
 print()
 
-# Loop so if they user asks "why" to question, the program gives an output and asks again, until user inputs "y" / "n"
+# Loop so if they user inputs "why", the program gives an output and asks again, until user inputs "y" / "n"
 while True:
     # Asks user for a response (related to the instructions)
     display_instructions = user_input("Do you want to see the INSTRUCTIONS (yes / no / why)? "
@@ -96,79 +103,73 @@ while True:
         print()
         continue
 
-    # Displays instructions of user says 'yes', loop breaks and continues with rest of code
+    # Displays instructions of user says 'yes', loop breaks and continues with rest of program
     elif display_instructions == "yes":
         print()
         instructions()
         break
 
-    # Outputs a statement if user says 'no', loop breaks and continues with rest of code
+    # Outputs a statement if user says 'no', loop breaks and continues with rest of code, does not display instructions
     elif display_instructions == "no":
         print("Alright then. If you say so...")
         break
 
-# Title labeling the start of the quiz
+# Title that labels the start of the quiz
 print("\n===================")
 print("!!! Let's Begin !!!")
 print("===================\n")
 
-# Difficulty selection / asks user what diff...
-ask_diff = user_input("What difficulty would you like (easy / medium / hard)? ", diff_list,
-                      "Please enter a valid difficulty (e / m / h)")
+# Difficulty selection / asks user what difficulty then want to select
+# Checks the diff_list and outputs an error if user inputs an invalid difficulty
+difficulty = user_input("What difficulty would you like (easy / medium / hard)? ", diff_list,
+                        "Please enter a valid difficulty (e / m / h)")
 
-if ask_diff == "easy":
-    difficulty = "easy"
-
-elif ask_diff == "medium":
-    difficulty = "medium"
-
-else:
-    difficulty = "hard"
-
-# Outputs the selected difficulty
-print(f"You've selected the {ask_diff} difficulty")
+# Tells the user what difficulty they have selected
+print(f"You've selected the {difficulty} difficulty")
 print()
 
-# Variables that are placeholders for round mechanics
-rounds_played = 0
-rounds_won = 0
-rounds_lost = 0
+# Variables that are placeholders for questions mechanics
+answered_questions = 0
+questions_correct = 0
+questions_incorrect = 0
 
-# Asks user how many rounds they want to play...
+# Asks user how many questions the user wants to attempt...
+# Loop that makes it so the user has to attempt at least one question
 while True:
 
-    # Asks the user how many rounds they want to play, or if they want infinite rounds
-    rounds = number_checker("How many rounds (<ENTER> for infinite): ", allow_floats="no")
+    # Asks the user how many questions they want to attempt, or if they want infinite questions
+    # Checks to see if the user inputs an integer (does not allow floats - will print an error)
+    questions_amount = number_checker("How many questions (<ENTER> for infinite): ", allow_floats="no")
 
-    # Makes the user play at least 1 round when they try quiting prematurely
-    if rounds == "xxx":
-        print("Please play at least one round.\n")
+    # Makes the user attempt at least 1 question when they try exiting prematurely
+    if questions_amount == "xxx":
+        print("Please attempt at least one question.\n")
 
-    # If the users input != "xxx" the loop breaks and the program continues
+    # If the users input = "y" or "n" the loop breaks and the rest of the program continues
     else:
         break
 
-# Looping mechanics for rounds
+# Looping mechanics for questions, and ends quiz when user chooses to
 end_quiz = "no"
 while True:
 
-    # Selects the heading, depending on if user is playing INFINITE mode or not
-    if rounds == "":
+    # Selects the heading, depending on if user is attempting INFINITE mode or not
+    if questions_amount == "":
         print()
-        heading = f"Round {rounds_played + 1} of INFINITE Mode"
+        heading = f"Question {answered_questions + 1} of INFINITE Mode"
 
     else:
         print()
-        heading = f"Round {rounds_played + 1} of {rounds}"
+        heading = f"Question {answered_questions + 1} of {questions_amount}"
 
     # Displays the heading after each question
     print(heading)
 
-    # Attempts given and list, placed in a loop - resets when a new round starts
+    # Number of attempts given, and already attempted list, placed in a loop - resets when a new question starts
     attempts_given = 3
     already_attempted = []
 
-    # Side values and answer the difficulty is "Easy"
+    # Generates side values and answer when the difficulty is "Easy"
     if difficulty == "easy":
         a_side = random.randint(1, 10)
         o_side = random.randint(1, 10)
@@ -177,10 +178,10 @@ while True:
         # Question which the user is asked in easy difficulty
         quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse? "
 
-        # The actual answer, used for comparison, rounded to 1 decimal point
+        # The actual answer, used for comparison to see if they get it right or wrong, rounded to 1 decimal point
         answer = round(answer_h, 1)
 
-    # Side values and answer the difficulty is "Medium"
+    # Generates side values and answer when the difficulty is "Medium"
     elif difficulty == "medium":
         a_side = random.randint(10, 20)
         o_side = random.randint(10, 20)
@@ -191,7 +192,7 @@ while True:
 
         answer = round(answer_h, 1)
 
-    # Side values and answer the difficulty is "Hard"
+    # Generates side values and answer when the difficulty is "Hard"
     elif difficulty == "hard":
 
         # Randomly selects a side to generate a question related to it
@@ -224,14 +225,15 @@ while True:
         # Gets users answer to the question
         user_answer = number_checker(quest_ask, allow_floats="yes")
 
-        # If user has guessed the same number, tell them - does not take a guess
+        # If user has answered the same number, tell them - does not take remove an attempt from their given amount
         if user_answer in already_attempted:
             print("You've already tried that number...\n")
             continue
 
-        # Compares users answer to the real answer, if they get it right, congratulate them - add +1 to rounds won
+        # Compares users answer to the real answer, if they get it right, congratulate them - add +1 to questions
+        # that the user has correctly answered
         if user_answer == answer:
-            rounds_won += 1
+            questions_correct += 1
             print(f"Congratulations! You got the answer with {attempts_given - 1} attempt(s) remaining.\n")
             break
 
@@ -248,46 +250,47 @@ while True:
             # places the users attempts in a list - used to check for duplicates
             already_attempted.append(user_answer)
 
-        # If the user runs out of attempts, ends the round
+        # If the user runs out of attempts, ends the question ends
         if attempts_given == 0:
-            rounds_lost += 1
-            print(f"You've run out of attempts: The answer was {answer}. Round Over.")
+            questions_incorrect += 1
+            print(f"You've run out of attempts: The answer was {answer}. Question Over.")
             break
 
-    # Once loop finishes, a round also finishes
-    rounds_played += 1
+    # Once loop finishes, the program keeps track of the number of questions which the user has answered
+    answered_questions += 1
 
-    # Ends the quiz if user plays all rounds or inputs the exit code
+    # Ends the quiz if user answers all questions or inputs the exit code
     # Different outputs because of two different scenarios
 
-    if rounds_played == rounds:
-        print("\nAll rounds have been completed.")
+    if answered_questions == questions_amount:
+        print("\nAll questions have been answered.")
         break
 
     elif end_quiz == "yes":
-        print("\nYou have chosen to end the quiz, no round(s).")
+        print("\nYou have chosen to end the quiz, no more question(s).")
         break
 
-# Shows quiz statistics once user has finished round(s)...
+# Shows quiz statistics once user has finished the question(s)...
 
-# Gives the percentage forms of rounds won, lost, and not played (all rounded to 1 dp)
-percent_win = round(rounds_won / rounds_played * 100, 1)
-percent_lose = round(rounds_lost / rounds_played * 100, 1)
-percent_not_played = round(100 - percent_lose - percent_win, 1)
+# Gives the percentage forms of question(s) answered correctly, incorrectly, and not answered (all rounded to 1 dp)
+percent_correct = round(questions_correct / answered_questions * 100, 1)
+percent_incorrect = round(questions_incorrect / answered_questions * 100, 1)
+percent_not_answered = round(100 - percent_incorrect - percent_correct, 1)
 
 print("\n**** quiz Statistics ****")
-# Changes depending on if user selected a set value, or infinite rounds
-if rounds == "":
-    print(f"Round(s) selected: INFINITE rounds")
+# Changes depending on if user selected a set value, or infinite questions
+if questions_amount == "":
+    print(f"Question(s) selected: INFINITE questions")
 
 else:
-    print(f"Round(s) selected: {rounds} round(s)")
+    print(f"Question(s) selected: {questions_amount} question(s)")
 
-# Percentages - win / lose / not played
-print("\nOf the rounds you've played: ")
-print(f"You didn't play: {rounds_played - rounds_lost - rounds_won} round(s), {percent_not_played}%")
-print(f"You won: {rounds_won} round(s), {percent_win}%")
-print(f"You lost: {rounds_lost} round(s), {percent_lose}%")
+# Percentages - Correct / Incorrect / Unanswered
+print("\nOf the questions you've answered: ")
+print(f"You didn't answer: {answered_questions - questions_incorrect - questions_correct} question(s), "
+      f"{percent_not_answered}%")
+print(f"Correct: {questions_correct} question(s), {percent_correct}%")
+print(f"Incorrect: {questions_incorrect} question(s), {percent_incorrect}%")
 
 # Thanks the user for playing the quiz
 print("\nThanks for playing!")
