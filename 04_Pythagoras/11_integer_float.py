@@ -13,10 +13,14 @@ def number_checker(question, allow_floats="yes"):
                 if allow_floats == "yes":
                     response = float(response)
 
+                    if response < 1:
+                        print("Please input a valid INTEGER")
+                        continue
+
                 elif allow_floats == "no":
                     response = int(response)
             except ValueError:
-                print("Please enter a valid number")
+                print("Please input a valid NUMBER (can contain decimals)")
                 continue
 
         return response
@@ -24,8 +28,8 @@ def number_checker(question, allow_floats="yes"):
 # Testing...
 
 
-user_integer = number_checker("Please input an integer: ", allow_floats="no")
+ask_integer = number_checker("Please input an integer: ", allow_floats="no")
 
-user_number = number_checker("Please input a number: ", allow_floats="yes")
+ask_number = number_checker("Please input a number: ", allow_floats="yes")
 
-print(f"\nInteger: {user_integer}\t\t\tNumber: {user_number}")
+print(f"\nInteger: {ask_integer}\t\t\tNumber: {ask_number}")
