@@ -14,20 +14,23 @@ def number_checker(question, allow_floats="yes"):
                     response = float(response)
 
                     if response < 1:
-                        print("Please input a valid INTEGER")
+                        print("Please input a valid NUMBER (> 0)")
                         continue
 
                 elif allow_floats == "no":
                     response = int(response)
+
+                    if response < 1:
+                        print("Please input a valid integer (> 0)")
+
             except ValueError:
-                print("Please input a valid NUMBER (can contain decimals)")
+                print("Please input a valid INTEGER / FLOAT")
                 continue
 
         return response
 
+
 # Testing...
-
-
 ask_integer = number_checker("Please input an integer: ", allow_floats="no")
 
 ask_number = number_checker("Please input a number: ", allow_floats="yes")
