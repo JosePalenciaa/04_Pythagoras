@@ -4,32 +4,20 @@ def number_checker(question, allow_floats="yes"):
     while True:
         response = input(question)
 
-        error = "Please enter a valid integer\n"
-
         if response == "xxx":
             return response
 
         elif response != "":
+
             try:
-                response = int(response)
+                if allow_floats == "yes":
+                    response = float(response)
 
-                if response < 1:
-                    print(error)
-                    continue
-
+                elif allow_floats == "no":
+                    response = int(response)
             except ValueError:
-                print(error)
+                print("Please enter a valid number")
                 continue
-
-        try:
-            if allow_floats == "yes":
-                response = float(response)
-
-            elif allow_floats == "no":
-                response = int(response)
-        except ValueError:
-            print("Please enter a valid number")
-            continue
 
         return response
 
