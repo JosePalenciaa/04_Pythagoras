@@ -230,9 +230,14 @@ while True:
             print("You've already tried that number...\n")
             continue
 
+        # Does not allow <ENTER> for an answer, incase user accidentally presses enter twice-3
+        if user_answer == "":
+            print("<ENTER> IS NOT AN ACCEPTED ANSWER!\n")
+            continue
+
         # Compares users answer to the real answer, if they get it right, congratulate them - add +1 to questions
         # that the user has correctly answered
-        if user_answer == answer:
+        elif user_answer == answer:
             questions_correct += 1
             print(f"Congratulations! You got the answer with {attempts_given - 1} attempt(s) remaining.\n")
             break
@@ -286,7 +291,7 @@ else:
     print(f"Question(s) selected: {questions_amount} question(s)")
 
 # Percentages - Correct / Incorrect / Unanswered
-print("\nOf the questions you've answered: ")
+print("\nOf the questions you've answered (including 'xxx')-3x: ")
 print(f"You didn't answer: {answered_questions - questions_incorrect - questions_correct} question(s), "
       f"{percent_not_answered}%")
 print(f"Correct: {questions_correct} question(s), {percent_correct}%")
