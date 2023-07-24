@@ -1,8 +1,20 @@
-for item in range(0, 10):
-    is_even = item % 2
-    print(f"{item} % 2 = {is_even}")
+import random
 
-    if is_even == 0:
-        print("is even")
-    else:
-        print("is odd")
+x = random.randint(3, 10)
+odd_even = x % 2
+
+if odd_even == 0:
+    print("is even")
+
+    a = x
+    b = (x/2)**2 - 1
+    c = (x/2)**2 + 1
+
+else:
+    print("is odd")
+
+    a = x
+    b = (x**2 / 2) - 0.5
+    c = (x**2 / 2) + 0.5
+
+print(f"\na = {a}, b = {b}, c {c}")

@@ -207,20 +207,21 @@ while True:
             c = (x ** 2 / 2) + 0.5
 
         # Question which the user is asked in easy difficulty
-        quest_ask = f"If the adjacent is {x} (a) and the opposite is {b} (b), what is the hypotenuse (c)? "
+        quest_ask = f"If the adjacent is {x} and the opposite is {b}, what is the hypotenuse (c)? "
 
         # The actual answer, used for comparison to see if they get it correct or incorrect
         answer = c
 
     # Generates side values and answer when the difficulty is "Medium"
     elif difficulty == "medium":
-        a_side, o_side = random.randint(10, 20), random.randint(10, 20)
-        hypotenuse = math.sqrt(a_side ** 2 + o_side ** 2)
+        a_side = random.randint(10, 20)
+        o_side = random.randint(10, 20)
+        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
         # Question which user is asked in medium difficulty
-        quest_ask = f"If the adjacent is {a_side} (a) and the opposite is {o_side} (b), what is the hypotenuse (c)? "
+        quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse (c)? "
 
-        answer = round(hypotenuse, 1)
+        answer = round(answer_h, 1)
 
     # Generates side values and answer when the difficulty is "Hard"
     elif difficulty == "hard":
@@ -229,25 +230,25 @@ while True:
         sides = ["adjacent", "opposite", "hypotenuse"]
         random_side = random.choice(sides)
 
-        a_side, o_side = random.randint(10, 20), random.randint(10, 20)
-        hypotenuse = math.sqrt(a_side ** 2 + o_side ** 2)
+        a_side = random.randint(10, 20)
+        o_side = random.randint(10, 20)
+        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
 
         # Questions - determined by which side was chosen above
         if random_side == "adjacent":
-            quest_ask = f"If the hypotenuse is {round(hypotenuse, 1)} (c) and the opposite is {o_side} (b), " \
+            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the opposite is {o_side}, " \
                         f"what is the adjacent (a)? "
             answer = round(a_side, 1)
 
         elif random_side == "opposite":
-            quest_ask = f"If the hypotenuse is {round(hypotenuse, 1)} (c) and the adjacent is {a_side} (a), " \
+            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the adjacent is {a_side}, " \
                         f"what is the opposite (b)? "
             answer = round(o_side, 1)
 
         else:
-            quest_ask = f"If the adjacent is {a_side} (a) and the opposite is {o_side} (b), " \
-                        f"what is the hypotenuse (h)? "
+            quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse (h)? "
 
-            answer = round(hypotenuse, 1)
+            answer = round(answer_h, 1)
 
     # Loop that continues while user still has attempts
     while attempts_given > 0:
@@ -288,7 +289,7 @@ while True:
         # If the user runs out of attempts, ends the question ends
         if attempts_given == 0:
             questions_incorrect += 1
-            print(f"You've ran out of attempts: The answer was {answer}. Question Over.")
+            print(f"You've run out of attempts: The answer was {answer}. Question Over.")
             break
 
     # Once loop finishes, the program keeps track of the number of questions which the user has answered
