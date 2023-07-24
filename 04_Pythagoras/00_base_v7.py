@@ -91,7 +91,7 @@ print("!!! Welcome to the Pythagoras Quiz !!!")
 print("######################################")
 print()
 
-# Loop so if they user inputs "why", the program gives an output and asks again, until user inputs "y" / "n"
+# Loop so if the user inputs "why", the program gives an output and asks again, until user inputs "y" / "n"
 while True:
     # Asks user for a response (related to the instructions)
     display_instructions = user_input("Do you want to see the INSTRUCTIONS (yes / no / why)? "
@@ -110,7 +110,7 @@ while True:
         break
 
     # Outputs a statement if user says 'no', loop breaks and continues with rest of code, does not display instructions
-    elif display_instructions == "no":
+    else:
         print("Alright then. If you say so...")
         break
 
@@ -125,8 +125,7 @@ difficulty = user_input("What difficulty would you like (easy / medium / hard)? 
                         "Please enter a valid difficulty (e / m / h)")
 
 # Tells the user what difficulty they have selected
-print(f"You've selected the {difficulty} difficulty")
-print()
+print(f"\nYou've selected the {difficulty} difficulty\n")
 
 # Variables that are placeholders for questions mechanics
 answered_questions = 0
@@ -145,7 +144,7 @@ while True:
     if questions_amount == "xxx":
         print("Please attempt at least one question.\n")
 
-    # If the users input = "y" or "n" the loop breaks and the rest of the program continues
+    # If the users input = "y" or "n" it is accepted - the loop breaks and the rest of the program continues
     else:
         break
 
