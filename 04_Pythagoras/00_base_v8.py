@@ -40,7 +40,7 @@ def number_checker(question, allow_floats="yes"):
 
                     # When implemented into base, no sides (which the user has to find) will be less than 1
                     if response < 1:
-                        print("Please input a valid NUMBER (> 1)\n")
+                        print("Please input a valid NUMBER (> 0)\n")
                         continue
 
                 # Allows only integers - Used to select and validate the # of questions
@@ -101,8 +101,6 @@ yesno_list = ["yes", "no", "why"]
 
 # list for accepted values when the user is asked what difficulty they want
 diff_list = ["easy", "medium", "hard"]
-
-difficulty = ""
 
 # Main Routine goes here...
 
@@ -212,43 +210,41 @@ while True:
         # The actual answer, used for comparison to see if they get it correct or incorrect
         answer = c
 
-    # Generates side values and answer when the difficulty is "Medium"
-    elif difficulty == "medium":
-        a_side = random.randint(10, 20)
-        o_side = random.randint(10, 20)
-        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
+    # Generates the side values for "medium" and "hard" difficulties
+    # The questions vary, depending on the difficulty
+    else:
+        a_side, o_side = random.randint(10, 20), random.randint(10, 20)
+        hypotenuse = math.sqrt(a_side ** 2 + o_side ** 2)
 
-        # Question which user is asked in medium difficulty
-        quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse (c)? "
+        if difficulty == "medium":
+            # Question which user is asked in medium difficulty
+            quest_ask = f"If the adjacent is {a_side} (a) and the opposite is {o_side} (b), what is the hypotenuse (c)? "
 
-        answer = round(answer_h, 1)
+            answer = round(hypotenuse, 1)
 
-    # Generates side values and answer when the difficulty is "Hard"
-    elif difficulty == "hard":
+        # Hard mode uses the same values as medium mode but has 3 possible questions, rather than just the hypotenuse
+        elif difficulty == "hard":
 
-        # Randomly selects a side to generate a question related to it
-        sides = ["adjacent", "opposite", "hypotenuse"]
-        random_side = random.choice(sides)
+            # Randomly selects a side to generate a question related to it
+            sides = ["adjacent", "opposite", "hypotenuse"]
+            random_side = random.choice(sides)
 
-        a_side = random.randint(10, 20)
-        o_side = random.randint(10, 20)
-        answer_h = math.sqrt(a_side ** 2 + o_side ** 2)
+            # Questions - determined by which side was chosen above
+            if random_side == "adjacent":
+                quest_ask = f"If the hypotenuse is {round(hypotenuse, 1)} (c) and the opposite is {o_side} (b), " \
+                            f"what is the adjacent (a)? "
+                answer = round(a_side, 1)
 
-        # Questions - determined by which side was chosen above
-        if random_side == "adjacent":
-            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the opposite is {o_side}, " \
-                        f"what is the adjacent (a)? "
-            answer = round(a_side, 1)
+            elif random_side == "opposite":
+                quest_ask = f"If the hypotenuse is {round(hypotenuse, 1)} (c) and the adjacent is {a_side} (a), " \
+                            f"what is the opposite (b)? "
+                answer = round(o_side, 1)
 
-        elif random_side == "opposite":
-            quest_ask = f"If the hypotenuse is {round(answer_h, 1)} and the adjacent is {a_side}, " \
-                        f"what is the opposite (b)? "
-            answer = round(o_side, 1)
+            else:
+                quest_ask = f"If the adjacent is {a_side} (a) and the opposite is {o_side} (b), " \
+                            f"what is the hypotenuse (h)? "
 
-        else:
-            quest_ask = f"If the adjacent is {a_side} and the opposite is {o_side}, what is the hypotenuse (h)? "
-
-            answer = round(answer_h, 1)
+                answer = round(hypotenuse, 1)
 
     # Loop that continues while user still has attempts
     while attempts_given > 0:
@@ -323,7 +319,7 @@ else:
     print(f"Question(s) selected: {questions_amount} question(s)")
 
 # Percentages - Correct / Incorrect / Unanswered
-print("\nOf the questions you've answered (including 'xxx')-3x: ")
+print("\nOf the questions you've answered (including 'xxx'): ")
 print(f"You didn't answer: {answered_questions - questions_incorrect - questions_correct} question(s), "
       f"{percent_not_answered}%")
 print(f"Correct: {questions_correct} question(s), {percent_correct}%")
