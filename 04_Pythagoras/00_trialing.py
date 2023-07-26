@@ -173,6 +173,25 @@ while True:
 end_quiz = "no"
 while True:
 
+    # Selects the heading, depending on if user is attempting INFINITE mode or not
+    if questions_amount == "":
+        print()
+        heading = f"Question {answered_questions + 1} of INFINITE Mode:"
+
+    else:
+        print()
+        heading = f"Question {answered_questions + 1} of {questions_amount}:"
+
+    # Displays the heading after each question
+    print(heading)
+
+    # Number of attempts given, and already attempted list, placed in a loop - resets when a new question starts
+    attempts_given = 3
+    already_attempted = []
+
+    # Generates side values and answer when the difficulty is "Easy"
+    # Sides are generated using the formula for Pythagorean triples, which only needs 1 side value
+    # different formulas are used, depending on if it is even or odd
     if difficulty == "easy":
         x = random.randint(3, 10)
         odd_even = x % 2
@@ -194,36 +213,120 @@ while True:
         answer = c
 
     # Generates side values and answer when the difficulty is "Medium"
-    else:
+    elif difficulty == "medium":
         a_side, o_side = random.randint(10, 20), random.randint(10, 20)
         hypotenuse = math.sqrt(a_side ** 2 + o_side ** 2)
 
-        if difficulty == "medium":
-            # Question which user is asked in medium difficulty
-            quest_ask = f"If the adjacent is {a_side} (a) and the opposite is {o_side} (b), what is the hypotenuse (c)? "
+        # Question which user is asked in medium difficulty
+        quest_ask = f"If the adjacent is {a_side} (a) and the opposite is {o_side} (b), what is the hypotenuse (c)? "
+
+        answer = round(hypotenuse, 1)
+
+    # Generates side values and answer when the difficulty is "Hard"
+    elif difficulty == "hard":
+
+        # Randomly selects a side to generate a question related to it
+        sides = ["adjacent", "opposite", "hypotenuse"]
+        random_side = random.choice(sides)
+
+        a_side, o_side = random.randint(10, 20), random.randint(10, 20)
+        hypotenuse = math.sqrt(a_side ** 2 + o_side ** 2)
+
+        # Questions - determined by which side was chosen above
+        if random_side == "adjacent":
+            quest_ask = f"If the hypotenuse is {round(hypotenuse, 1)} (c) and the opposite is {o_side} (b), " \
+                        f"what is the adjacent (a)? "
+            answer = round(a_side, 1)
+
+        elif random_side == "opposite":
+            quest_ask = f"If the hypotenuse is {round(hypotenuse, 1)} (c) and the adjacent is {a_side} (a), " \
+                        f"what is the opposite (b)? "
+            answer = round(o_side, 1)
+
+        else:
+            quest_ask = f"If the adjacent is {a_side} (a) and the opposite is {o_side} (b), " \
+                        f"what is the hypotenuse (h)? "
 
             answer = round(hypotenuse, 1)
 
-        # Generates side values and answer when the difficulty is "Hard"
-        elif difficulty == "hard":
+    # Loop that continues while user still has attempts
+    while attempts_given > 0:
 
-            # Randomly selects a side to generate a question related to it
-            sides = ["adjacent", "opposite", "hypotenuse"]
-            random_side = random.choice(sides)
+        # Gets users answer to the question
+        user_answer = number_checker(quest_ask, allow_floats="yes")
 
-            # Questions - determined by which side was chosen above
-            if random_side == "adjacent":
-                quest_ask = f"If the hypotenuse is {round(hypotenuse, 1)} (c) and the opposite is {o_side} (b), " \
-                            f"what is the adjacent (a)? "
-                answer = round(a_side, 1)
+        # If user has answered the same number, tell them - does not take remove an attempt from their given amount
+        if user_answer in already_attempted:
+            print("You've already tried that number...\n")
+            continue
 
-            elif random_side == "opposite":
-                quest_ask = f"If the hypotenuse is {round(hypotenuse, 1)} (c) and the adjacent is {a_side} (a), " \
-                            f"what is the opposite (b)? "
-                answer = round(o_side, 1)
+        # Does not allow <ENTER> for an answer, incase user accidentally presses enter twice-3
+        if user_answer == "":
+            print("<ENTER> IS NOT AN ACCEPTED ANSWER!\n")
+            continue
 
-            else:
-                quest_ask = f"If the adjacent is {a_side} (a) and the opposite is {o_side} (b), " \
-                            f"what is the hypotenuse (h)? "
+        # Compares users answer to the real answer, if they get it correct, congratulate them - add +1 to questions
+        # that the user has correctly answered
+        elif user_answer == answer:
+            questions_correct += 1
+            print(f"Congratulations! You got the answer with {attempts_given - 1} attempt(s) remaining.\n")
+            break
 
-                answer = round(hypotenuse, 1)
+        # Ends quiz if user inputs exit code
+        elif user_answer == "xxx":
+            end_quiz = "yes"
+            break
+
+        # If users answer is incorrect, tell them and remove 1 attempt from the 3 given
+        else:
+            attempts_given -= 1
+            print(f"You've answered incorrectly, {attempts_given} attempt(s) remaining. Try Again.\n")
+
+            # places the users attempts in a list - used to check for duplicates
+            already_attempted.append(user_answer)
+
+        # If the user runs out of attempts, ends the question ends
+        if attempts_given == 0:
+            questions_incorrect += 1
+            print(f"You've ran out of attempts: The answer was {answer}. Question Over.")
+            break
+
+    # Once loop finishes, the program keeps track of the number of questions which the user has answered
+    answered_questions += 1
+
+    # Ends the quiz if user answers all questions or inputs the exit code
+    # Different outputs because of two different scenarios
+
+    if answered_questions == questions_amount:
+        print("\nAll questions have been answered.")
+        break
+
+    elif end_quiz == "yes":
+        print("\nYou have chosen to end the quiz, no more question(s).")
+        break
+
+# Shows quiz statistics once user has finished the question(s)...
+
+# Gives the percentage forms of question(s) answered correctly, incorrectly, and not answered (all rounded to 1 dp)
+percent_correct = round(questions_correct / answered_questions * 100, 1)
+percent_incorrect = round(questions_incorrect / answered_questions * 100, 1)
+percent_not_answered = round(100 - percent_incorrect - percent_correct, 1)
+
+print()
+print("Quiz Statistics", "*", "=", "no")
+# Changes depending on if user selected a set value, or infinite questions
+if questions_amount == "":
+    print(f"Question(s) selected: INFINITE questions")
+
+else:
+    print(f"Question(s) selected: {questions_amount} question(s)")
+
+# Percentages - Correct / Incorrect / Unanswered
+print("\nOf the questions you've answered (including 'xxx')-3x: ")
+print(f"You didn't answer: {answered_questions - questions_incorrect - questions_correct} question(s), "
+      f"{percent_not_answered}%")
+print(f"Correct: {questions_correct} question(s), {percent_correct}%")
+print(f"Incorrect: {questions_incorrect} question(s), {percent_incorrect}%")
+
+# Thanks the user for playing the quiz
+print("\nThanks for playing!")

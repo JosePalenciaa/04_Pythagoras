@@ -1,4 +1,3 @@
-# Copied from Lucky Unicorn
 def statement_generator(statement, decoration, above_below, has_emoji=None):
     sides = decoration * 3
 

@@ -226,8 +226,7 @@ while True:
         elif difficulty == "hard":
 
             # Randomly selects a side to generate a question related to it
-            sides = ["adjacent", "opposite", "hypotenuse"]
-            random_side = random.choice(sides)
+            random_side = random.choice(["adjacent", "opposite", "hypotenuse"])
 
             # Questions - determined by which side was chosen above
             if random_side == "adjacent":
@@ -258,7 +257,7 @@ while True:
             continue
 
         # Does not allow <ENTER> for an answer, incase user accidentally presses enter twice-3
-        if user_answer == "":
+        elif user_answer == "":
             print("<ENTER> IS NOT AN ACCEPTED ANSWER!\n")
             continue
 
@@ -293,7 +292,6 @@ while True:
 
     # Ends the quiz if user answers all questions or inputs the exit code
     # Different outputs because of two different scenarios
-
     if answered_questions == questions_amount:
         print("\nAll questions have been answered.")
         break
@@ -303,7 +301,6 @@ while True:
         break
 
 # Shows quiz statistics once user has finished the question(s)...
-
 # Gives the percentage forms of question(s) answered correctly, incorrectly, and not answered (all rounded to 1 dp)
 percent_correct = round(questions_correct / answered_questions * 100, 1)
 percent_incorrect = round(questions_incorrect / answered_questions * 100, 1)
