@@ -307,10 +307,13 @@ percent_incorrect = round(questions_incorrect / answered_questions * 100, 1)
 percent_not_answered = round(100 - percent_incorrect - percent_correct, 1)
 
 print()
-print("Quiz Statistics", "*", "=", "no")
+statement_generator("Quiz Statistics", "*", "=", "no")
+print()
+
 # Changes depending on if user selected a set value, or infinite questions
 if questions_amount == "":
     print(f"Question(s) selected: INFINITE questions")
+    print(f"Questions answered: {answered_questions}")
 
 else:
     print(f"Question(s) selected: {questions_amount} question(s)")
