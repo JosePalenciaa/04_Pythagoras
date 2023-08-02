@@ -21,7 +21,7 @@ def instructions():
 
 
 # Number checker function - given the situation, the user can input both integers and floats, or exclusively integers
-def number_checker(question, allow_floats="yes"):
+def number_checker(question, allow_floats=""):
 
     # Looping that continues until the user inputs a valid response to the question
     while True:
@@ -69,6 +69,7 @@ def user_input(question, valid_lists, error):
             if response == item[0] or response == item:
                 return item
 
+        # Prints the appropriate error depending on which question was asked (difficulty or yes / no)
         print(error)
         print()
 
@@ -111,8 +112,8 @@ print()
 # Loop so if the user inputs "why", the program gives an output and asks again, until user inputs "y" / "n"
 while True:
     # Asks user for a response (related to the instructions)
-    display_instructions = user_input("Do you want to see the INSTRUCTIONS (yes / no / why)? "
-                                      , yesno_list, "Please enter a valid response (y / n / w)")
+    display_instructions = user_input("Do you want to see the INSTRUCTIONS (yes / no / why)? ",
+                                      yesno_list, "Please enter a valid response (y / n / w)")
 
     # Gets angry at user if they respond with 'why', loop continues
     if display_instructions == "why":
@@ -156,7 +157,7 @@ questions_incorrect = 0
 while True:
 
     # Asks the user how many questions they want to attempt, or if they want infinite questions
-    # Checks to see if the user inputs an integer (does not allow floats - will print an error)
+    # Checks to see if the user inputs an integer (does not allow floats (cannot have decimal rounds)
     questions_amount = number_checker("How many questions (<ENTER> for infinite): ", allow_floats="no")
 
     # Makes the user attempt at least 1 question when they try exiting prematurely
@@ -170,6 +171,8 @@ while True:
 # Looping mechanics for questions, and ends quiz when user chooses to
 end_quiz = "no"
 while True:
+    quest_ask = ''
+    answer = ''
 
     # Selects the heading, depending on if user is attempting INFINITE mode or not
     if questions_amount == "":
@@ -218,7 +221,8 @@ while True:
 
         if difficulty == "medium":
             # Question which user is asked in medium difficulty
-            quest_ask = f"If the adjacent is {a_side} (a) and the opposite is {o_side} (b), what is the hypotenuse (c)? "
+            quest_ask = f"If the adjacent is {a_side} (a) and the " \
+                        f"opposite is {o_side} (b), what is the hypotenuse (c)? "
 
             answer = round(hypotenuse, 1)
 
@@ -248,7 +252,7 @@ while True:
     # Loop that continues while user still has attempts
     while attempts_given > 0:
 
-        # Gets users answer to the question
+        # Gets users answer to the question (allows floats because the user can input floats as answers)
         user_answer = number_checker(quest_ask, allow_floats="yes")
 
         # If user has answered the same number, tell them - does not take remove an attempt from their given amount
@@ -310,7 +314,7 @@ print()
 statement_generator("Quiz Statistics", "*", "=", "no")
 print()
 
-# Changes depending on if user selected a set value, or infinite questions
+# Changes depending on if user selected a set value for how many questions, or infinite questions
 if questions_amount == "":
     print(f"Question(s) selected: INFINITE questions")
     print(f"Questions answered: {answered_questions}")

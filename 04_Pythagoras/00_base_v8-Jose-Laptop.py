@@ -40,7 +40,7 @@ def number_checker(question, allow_floats="yes"):
 
                     # When implemented into base, no sides (which the user has to find) will be less than 1
                     if response < 1:
-                        print("Please input a valid NUMBER (> 1)\n")
+                        print("Please input a valid NUMBER (> 0)\n")
                         continue
 
                 # Allows only integers - Used to select and validate the # of questions
@@ -101,8 +101,6 @@ yesno_list = ["yes", "no", "why"]
 
 # list for accepted values when the user is asked what difficulty they want
 diff_list = ["easy", "medium", "hard"]
-
-difficulty = ""
 
 # Main Routine goes here...
 
@@ -173,6 +171,25 @@ while True:
 end_quiz = "no"
 while True:
 
+    # Selects the heading, depending on if user is attempting INFINITE mode or not
+    if questions_amount == "":
+        print()
+        heading = f"Question {answered_questions + 1} of INFINITE Mode:"
+
+    else:
+        print()
+        heading = f"Question {answered_questions + 1} of {questions_amount}:"
+
+    # Displays the heading after each question
+    print(heading)
+
+    # Number of attempts given, and already attempted list, placed in a loop - resets when a new question starts
+    attempts_given = 3
+    already_attempted = []
+
+    # Generates side values and answer when the difficulty is "Easy"
+    # Sides are generated using the formula for Pythagorean triples, which only needs 1 side value
+    # different formulas are used, depending on if it is even or odd
     if difficulty == "easy":
         x = random.randint(3, 10)
         odd_even = x % 2
@@ -188,12 +205,13 @@ while True:
             c = (x ** 2 / 2) + 0.5
 
         # Question which the user is asked in easy difficulty
-        quest_ask = f"If the adjacent is {x} (a) and the opposite is {b} (b), what is the hypotenuse (c)? "
+        quest_ask = f"If the adjacent is {x} and the opposite is {b}, what is the hypotenuse (c)? "
 
         # The actual answer, used for comparison to see if they get it correct or incorrect
         answer = c
 
-    # Generates side values and answer when the difficulty is "Medium"
+    # Generates the side values for "medium" and "hard" difficulties
+    # The questions vary, depending on the difficulty-
     else:
         a_side, o_side = random.randint(10, 20), random.randint(10, 20)
         hypotenuse = math.sqrt(a_side ** 2 + o_side ** 2)
@@ -204,7 +222,7 @@ while True:
 
             answer = round(hypotenuse, 1)
 
-        # Generates side values and answer when the difficulty is "Hard"
+        # Hard mode uses the same values as medium mode but has 3 possible questions, rather than just the hypotenuse
         elif difficulty == "hard":
 
             # Randomly selects a side to generate a question related to it
@@ -227,3 +245,85 @@ while True:
                             f"what is the hypotenuse (h)? "
 
                 answer = round(hypotenuse, 1)
+
+    # Loop that continues while user still has attempts
+    while attempts_given > 0:
+
+        # Gets users answer to the question
+        user_answer = number_checker(quest_ask, allow_floats="yes")
+
+        # If user has answered the same number, tell them - does not take remove an attempt from their given amount
+        if user_answer in already_attempted:
+            print("You've already tried that number...\n")
+            continue
+
+        # Does not allow <ENTER> for an answer, incase user accidentally presses enter twice-3
+        if user_answer == "":
+            print("<ENTER> IS NOT AN ACCEPTED ANSWER!\n")
+            continue
+
+        # Compares users answer to the real answer, if they get it correct, congratulate them - add +1 to questions
+        # that the user has correctly answered
+        elif user_answer == answer:
+            questions_correct += 1
+            print(f"Congratulations! You got the answer with {attempts_given - 1} attempt(s) remaining.\n")
+            break
+
+        # Ends quiz if user inputs exit code
+        elif user_answer == "xxx":
+            end_quiz = "yes"
+            break
+
+        # If users answer is incorrect, tell them and remove 1 attempt from the 3 given
+        else:
+            attempts_given -= 1
+            print(f"You've answered incorrectly, {attempts_given} attempt(s) remaining. Try Again.\n")
+
+            # places the users attempts in a list - used to check for duplicates
+            already_attempted.append(user_answer)
+
+        # If the user runs out of attempts, ends the question ends
+        if attempts_given == 0:
+            questions_incorrect += 1
+            print(f"You've run out of attempts: The answer was {answer}. Question Over.")
+            break
+
+    # Once loop finishes, the program keeps track of the number of questions which the user has answered
+    answered_questions += 1
+
+    # Ends the quiz if user answers all questions or inputs the exit code
+    # Different outputs because of two different scenarios
+
+    if answered_questions == questions_amount:
+        print("\nAll questions have been answered.")
+        break
+
+    elif end_quiz == "yes":
+        print("\nYou have chosen to end the quiz, no more question(s).")
+        break
+
+# Shows quiz statistics once user has finished the question(s)...
+
+# Gives the percentage forms of question(s) answered correctly, incorrectly, and not answered (all rounded to 1 dp)
+percent_correct = round(questions_correct / answered_questions * 100, 1)
+percent_incorrect = round(questions_incorrect / answered_questions * 100, 1)
+percent_not_answered = round(100 - percent_incorrect - percent_correct, 1)
+
+print()
+print("Quiz Statistics", "*", "=", "no")
+# Changes depending on if user selected a set value, or infinite questions
+if questions_amount == "":
+    print(f"Question(s) selected: INFINITE questions")
+
+else:
+    print(f"Question(s) selected: {questions_amount} question(s)")
+
+# Percentages - Correct / Incorrect / Unanswered
+print("\nOf the questions you've answered (including 'xxx'): ")
+print(f"You didn't answer: {answered_questions - questions_incorrect - questions_correct} question(s), "
+      f"{percent_not_answered}%")
+print(f"Correct: {questions_correct} question(s), {percent_correct}%")
+print(f"Incorrect: {questions_incorrect} question(s), {percent_incorrect}%")
+
+# Thanks the user for playing the quiz
+print("\nThanks for playing!")
