@@ -6,11 +6,10 @@ import random
 
 # Displays instructions function
 def instructions():
-    print("---------------------")
+    print("\n---------------------")
     print("**** How to Play ****")
     print("---------------------")
-    print()
-    print("Your goal is to calculate the missing side using the 'Pythagorean Theorem'..."
+    print("\nYour goal is to calculate the missing side using the 'Pythagorean Theorem'..."
           "\n• Formulas:\n\tHypotenuse | a² + b² = c²\n\tOpposite | c² - a² = b²\n\tAdjacent | c² - b² = a²"
           "\n\tHypotenuse = c | Opposite / Adjacent = b / a"
           "\n\n• First select a difficulty (easy / medium / hard)."
@@ -69,8 +68,7 @@ def user_input(question, valid_lists, error):
                 return item
 
         # Prints the appropriate error depending on which question was asked (difficulty or yes / no)
-        print(error)
-        print()
+        print(error + '\n')
 
 
 # Function used to make the game look good
@@ -116,13 +114,12 @@ while True:
 
     # Gets angry at user if they respond with 'why', loop continues
     if display_instructions == "why":
-        print("Because I said so!!!")
-        print()
+        print("Because I said so!!!\n")
+
         continue
 
     # Displays instructions of user says 'yes', loop breaks and continues with rest of program
     elif display_instructions == "yes":
-        print()
         instructions()
         break
 
@@ -171,18 +168,19 @@ while True:
 end_quiz = "no"
 while end_quiz != "yes":
 
+    # Adds +=1 the answered_questions variable, this keeps track of the amount of questions user has answered
+    answered_questions += 1
+
     # call variables
     quest_ask = ""
     answer = ""
 
     # Selects the heading, depending on if user is attempting INFINITE mode or not
     if questions_amount == "":
-        print()
-        heading = f"Question {answered_questions + 1} of INFINITE Mode:"
+        heading = f"\nQuestion {answered_questions} of INFINITE Mode:"
 
     else:
-        print()
-        heading = f"Question {answered_questions + 1} of {questions_amount}:"
+        heading = f"\nQuestion {answered_questions} of {questions_amount}:"
 
     # Displays the heading after each question
     print(heading)
@@ -257,8 +255,8 @@ while end_quiz != "yes":
         user_answer = number_checker(quest_ask, True)
 
         # If the user tries to quit on their first attempt of their first question, it prevents them
-        # 'answered_questions == 0' makes it so that on their first question, they cannot quit instantly
-        if user_answer == "xxx" and answered_questions == 0 and attempts_given == 3:
+        # User cannot exit on first question and first attempt
+        if user_answer == "xxx" and answered_questions == 1 and attempts_given == 3:
             print("PLEASE ATTEMPT AT LEAST ONE QUESTION!!! 😡😡😡\n")
             continue
 
@@ -297,9 +295,6 @@ while end_quiz != "yes":
             questions_incorrect += 1
             print(f"You've run out of attempts: The answer was {answer}. Question Over.")
             break
-
-    # Once loop finishes, the program keeps track of the number of questions which the user has answered
-    answered_questions += 1
 
     # Ends the quiz if user answers all questions or inputs the exit code
     # Different outputs because of two different scenarios

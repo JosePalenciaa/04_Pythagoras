@@ -171,8 +171,8 @@ while True:
 # Looping mechanics for questions, and ends quiz when user chooses to
 end_quiz = "no"
 while True:
-    quest_ask = ''
-    answer = ''
+    quest_ask = ""
+    answer = ""
 
     # Selects the heading, depending on if user is attempting INFINITE mode or not
     if questions_amount == "":
