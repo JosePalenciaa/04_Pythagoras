@@ -21,8 +21,7 @@ def instructions():
 
 
 # Number checker function - given the situation, the user can input both integers and floats, or exclusively integers
-def number_checker(question, allow_floats=""):
-
+def number_checker(question, allow_floats=False):
     # Looping that continues until the user inputs a valid response to the question
     while True:
         response = input(question)
@@ -35,7 +34,7 @@ def number_checker(question, allow_floats=""):
         elif response != "":
             try:
                 # Allows floats (numbers and integers) - Used to check if the user inputs a valid answer
-                if allow_floats == "yes":
+                if allow_floats is True:
                     response = float(response)
 
                     # When implemented into base, no sides (which the user has to find) will be less than 1
@@ -44,7 +43,7 @@ def number_checker(question, allow_floats=""):
                         continue
 
                 # Allows only integers - Used to select and validate the # of questions
-                elif allow_floats == "no":
+                elif allow_floats is False:
                     response = int(response)
 
                     if response < 1:
@@ -92,8 +91,10 @@ def statement_generator(statement, decoration, above_below, has_emoji=None):
     print(statement)
     print(top_bottom)
 
-    return ""
+    return
 
+
+# Main Routine goes here...
 
 # Lists go here...
 
@@ -102,8 +103,6 @@ yesno_list = ["yes", "no", "why"]
 
 # list for accepted values when the user is asked what difficulty they want
 diff_list = ["easy", "medium", "hard"]
-
-# Main Routine goes here...
 
 # Introduction / title of the quiz
 statement_generator("Welcome to the Pythagoras Quiz", "📐", "=", "yes")
@@ -158,7 +157,7 @@ while True:
 
     # Asks the user how many questions they want to attempt, or if they want infinite questions
     # Checks to see if the user inputs an integer (does not allow floats (cannot have decimal rounds)
-    questions_amount = number_checker("How many questions (<ENTER> for infinite): ", allow_floats="no")
+    questions_amount = number_checker("How many questions (<ENTER> for infinite): ")
 
     # Makes the user attempt at least 1 question when they try exiting prematurely
     if questions_amount == "xxx":
@@ -169,10 +168,10 @@ while True:
         break
 
 # Looping mechanics for questions, and ends quiz when user chooses to
-end_quiz = ""
-while end_quiz == "no":
+end_quiz = "no"
+while end_quiz != "yes":
 
-    # Variable placeholders
+    # call variables
     quest_ask = ""
     answer = ""
 
@@ -255,7 +254,18 @@ while end_quiz == "no":
     while attempts_given > 0:
 
         # Gets users answer to the question (allows floats because the user can input floats as answers)
-        user_answer = number_checker(quest_ask, allow_floats="yes")
+        user_answer = number_checker(quest_ask, True)
+
+        # If the user tries to quit on their first attempt of their first question, it prevents them
+        # 'answered_questions == 0' makes it so that on their first question, they cannot quit instantly
+        if user_answer == "xxx" and answered_questions == 0 and attempts_given == 3:
+            print("PLEASE ATTEMPT AT LEAST ONE QUESTION!!! 😡😡😡\n")
+            continue
+
+        # Ends quiz if user inputs exit code
+        elif user_answer == "xxx":
+            end_quiz = "yes"
+            break
 
         # If user has answered the same number, tell them - does not take remove an attempt from their given amount
         if user_answer in already_attempted:
@@ -272,11 +282,6 @@ while end_quiz == "no":
         elif user_answer == answer:
             questions_correct += 1
             print(f"Congratulations! You got the answer with {attempts_given - 1} attempt(s) remaining.\n")
-            break
-
-        # Ends quiz if user inputs exit code
-        elif user_answer == "xxx":
-            end_quiz = "yes"
             break
 
         # If users answer is incorrect, tell them and remove 1 attempt from the 3 given
@@ -299,11 +304,7 @@ while end_quiz == "no":
     # Ends the quiz if user answers all questions or inputs the exit code
     # Different outputs because of two different scenarios
     if answered_questions == questions_amount:
-        print("\nAll questions have been answered.")
-        break
-
-    elif end_quiz == "yes":
-        print("\nYou have chosen to end the quiz, no more question(s).")
+        print("\nAll questions have been attempted.")
         break
 
 # Shows quiz statistics once user has finished the question(s)...
