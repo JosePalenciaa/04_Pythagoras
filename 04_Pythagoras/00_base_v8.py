@@ -39,8 +39,8 @@ def number_checker(question, allow_floats=""):
                     response = float(response)
 
                     # When implemented into base, no sides (which the user has to find) will be less than 1
-                    if response < 1:
-                        print("Please input a valid NUMBER (> 1)\n")
+                    if response <= 0:
+                        print("Please input a valid NUMBER (> 0)\n")
                         continue
 
                 # Allows only integers - Used to select and validate the # of questions

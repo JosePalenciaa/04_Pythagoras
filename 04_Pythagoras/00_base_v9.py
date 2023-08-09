@@ -4,7 +4,7 @@ import random
 
 # Functions go here...
 
-# Displays instructions function
+# Displays instructions function (depends on the users input of y / n / w / etc...)
 def instructions():
     print("\n---------------------")
     print("**** How to Play ****")
@@ -13,7 +13,7 @@ def instructions():
           "\n• Formulas:\n\tHypotenuse | a² + b² = c²\n\tOpposite | c² - a² = b²\n\tAdjacent | c² - b² = a²"
           "\n\tHypotenuse = c | Opposite / Adjacent = b / a"
           "\n\n• First select a difficulty (easy / medium / hard)."
-          "\n• You are given 3 attempts - Answer with 'xxx' to end quiz. "
+          "\n• You are given 3 attempts - Answer with 'xxx' to end quiz (except on the first attempt, first question. "
           "\n• Solve the missing side. "
           "\n• Hypotenuse should be rounded to 1dp | Adjacent and opposite to integers."
           "\n• How smart do you think you are?")
@@ -25,26 +25,27 @@ def number_checker(question, allow_floats=False):
     while True:
         response = input(question)
 
-        # Used as the exit code
+        # Detects the exit code, depending on which part of the program it is detected, an appropriate output is given
         if response == "xxx":
             return response
 
-        # When the user does not input <ENTER> / when they select infinite mode
+        # When the user does not input <ENTER> / when they select infinite mode...
         elif response != "":
             try:
                 # Allows floats (numbers and integers) - Used to check if the user inputs a valid answer
                 if allow_floats is True:
                     response = float(response)
 
-                    # When implemented into base, no sides (which the user has to find) will be less than 1
-                    if response < 1:
-                        print("Please input a valid NUMBER (> 1)\n")
+                    # Doesn't allow any values less than 0 / values that are negative
+                    if response <= 0:
+                        print("Please input a valid NUMBER (> 0)\n")
                         continue
 
                 # Allows only integers - Used to select and validate the # of questions
                 elif allow_floats is False:
                     response = int(response)
 
+                    # The lowest amount of questions possible is 1, hence the error when user inputs less than 1
                     if response < 1:
                         print("Please input a valid integer (> 0)\n")
                         continue
@@ -71,13 +72,14 @@ def user_input(question, valid_lists, error):
         print(error + '\n')
 
 
-# Function used to make the game look good
+# Function used to make the game look good / for the aesthetics, makes the heading / subheadings 'unique'
 def statement_generator(statement, decoration, above_below, has_emoji=None):
     sides = decoration * 3
 
     # statement = "{} {} {}".format(sides, statement, sides)
     statement = f"{sides} {statement} {sides}"
 
+    # If the statement has emojis, the lengths of the decoration is calculated differently compared to without
     if has_emoji == "yes":
         top_bottom_length = len(statement) + (len(sides) * 2) + 2
     else:
@@ -85,6 +87,7 @@ def statement_generator(statement, decoration, above_below, has_emoji=None):
 
     top_bottom = above_below * top_bottom_length
 
+    # Displays the statement with the decoration
     print(top_bottom)
     print(statement)
     print(top_bottom)
@@ -102,7 +105,7 @@ yesno_list = ["yes", "no", "why"]
 # list for accepted values when the user is asked what difficulty they want
 diff_list = ["easy", "medium", "hard"]
 
-# Introduction / title of the quiz
+# Introduction / title of the quiz, contains emojis, hence allowing emojis
 statement_generator("Welcome to the Pythagoras Quiz", "📐", "=", "yes")
 print()
 
@@ -112,7 +115,7 @@ while True:
     display_instructions = user_input("Do you want to see the INSTRUCTIONS (yes / no / why)? ",
                                       yesno_list, "Please enter a valid response (y / n / w)")
 
-    # Gets angry at user if they respond with 'why', loop continues
+    # Gets angry at user if they respond with 'why', loop repeats until user inputs "y" / "n"
     if display_instructions == "why":
         print("Because I said so!!!\n")
 
